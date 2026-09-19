@@ -55,7 +55,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                 .stream()
                 .anyMatch(c -> c.getCode().equalsIgnoreCase(code) && c.getName().equalsIgnoreCase(name));
 
-       if (isSimilarProduct) {
+       if (isSimilarProduct == true) {
            IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Encontrado no sistema.", code, name));
        } else {
            IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Inexistente!", code, name));

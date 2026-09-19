@@ -67,6 +67,6 @@ public abstract class StockDefault {
 
     @Override
     public String toString() {
-        return String.format(localeBr, "ID: %d | Cod.: %s | Prod.: %s | Preço: %.2f | Qtde: %d", id, code, name, price, amount);
+        return String.format(localeBr, "ID: %d | Cod.: %s | Prod.: %-50s | Preço: %-15.2f | Qtde: %d", id, code, name, price, amount);
     }
 }
