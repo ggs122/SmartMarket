@@ -6,8 +6,8 @@ public abstract class StockDefault {
 
     private long id;
     private static long staticId = 10000;
-    private String code;
-    private String name;
+    protected String code;
+    protected String name;
     private double price;
     private long amount;
 

@@ -4,6 +4,7 @@ import br.com.stockofproducts.stockdefault.StockDefault;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateProducts extends StockDefault {
 
@@ -11,6 +12,7 @@ public class CreateProducts extends StockDefault {
     private boolean isCode;
     private boolean isCountryFormat;
     private boolean isCodeFactory;
+    private Locale localeBr = Locale.forLanguageTag("pt_BR");
 
     private CreateProducts(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
         super(countryFormat, codeFactory, code, name, price, amount);
@@ -26,9 +28,10 @@ public class CreateProducts extends StockDefault {
 
         if (isCountryFormat) {
             if (isCodeFactory) {
-                if (isCode) {
+                if (isCode && isSimilarProduct(code, name)) {
                     CreateProducts createProducts = new CreateProducts(countryFormat, codeFactory, code, name, price, amount);
                     createdProductsList.add(createProducts);
+
                 } else {
                     IO.println("Código do produto inaválido!");
                 }
@@ -40,6 +43,22 @@ public class CreateProducts extends StockDefault {
         } else {
             IO.println("Código do país inválido!");
         }
+    }
+
+    private boolean isSimilarProduct(String code, String name) {
+        boolean isSimilarProduct;
+
+       isSimilarProduct = createdProductsList
+                .stream()
+                .anyMatch(c -> c.code.equalsIgnoreCase(code) && c.name.equalsIgnoreCase(name));
+
+       if (isSimilarProduct) {
+           IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Encontrado no sistema.", code, name));
+       } else {
+           IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Inexistente!", code, name));
+       }
+
+       return isSimilarProduct;
     }
 
     @Override
@@ -69,6 +88,8 @@ public class CreateProducts extends StockDefault {
 
     @Override
     public void printProduct() {
-
+        createdProductsList
+                .stream()
+                .forEach(c -> IO.println(c));
     }
 }
