@@ -6,13 +6,13 @@ public abstract class StockDefault {
 
     private long id;
     private static long staticId = 10000;
-    protected String code;
-    protected String name;
+    private String code;
+    private String name;
     private double price;
     private long amount;
 
-    private final String countryFormat;
-    private final String codeFactory;
+    private String countryFormat;
+    private String codeFactory;
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
@@ -25,6 +25,36 @@ public abstract class StockDefault {
         this.amount = amount;
         this.countryFormat = countryFormat;
         this.codeFactory = codeFactory;
+    }
+
+    public StockDefault() {}
+
+    protected long getId() {
+        return id;
+    }
+
+    protected String getCode() {
+        return code;
+    }
+
+    protected String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    protected long getAmount() {
+        return amount;
+    }
+
+    protected String getCountryFormat() {
+        return countryFormat;
+    }
+
+    protected String getCodeFactory() {
+        return codeFactory;
     }
 
     public abstract void createProduct(String countryFormat, String codeFactory, String code, String name, double price, long amount);

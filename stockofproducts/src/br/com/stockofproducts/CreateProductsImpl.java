@@ -1,12 +1,13 @@
 package br.com.stockofproducts;
 
+import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.stockofproducts.stockdefault.StockDefault;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CreateProducts extends StockDefault {
+public class CreateProductsImpl extends StockDefault implements CreateProductsInterface {
 
 
     private boolean isCode;
@@ -14,11 +15,13 @@ public class CreateProducts extends StockDefault {
     private boolean isCodeFactory;
     private Locale localeBr = Locale.forLanguageTag("pt_BR");
 
-    private CreateProducts(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
+    private CreateProductsImpl(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
         super(countryFormat, codeFactory, code, name, price, amount);
     }
 
-    static List<CreateProducts> createdProductsList = new ArrayList<>();
+    public CreateProductsImpl(){}
+
+    static List<CreateProductsImpl> createdProductsList = new ArrayList<>();
 
     @Override
     public void createProduct(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
@@ -28,8 +31,8 @@ public class CreateProducts extends StockDefault {
 
         if (isCountryFormat) {
             if (isCodeFactory) {
-                if (isCode && isSimilarProduct(code, name)) {
-                    CreateProducts createProducts = new CreateProducts(countryFormat, codeFactory, code, name, price, amount);
+                if (isCode) {
+                    CreateProductsImpl createProducts = new CreateProductsImpl(countryFormat, codeFactory, code, name, price, amount);
                     createdProductsList.add(createProducts);
 
                 } else {
@@ -50,7 +53,7 @@ public class CreateProducts extends StockDefault {
 
        isSimilarProduct = createdProductsList
                 .stream()
-                .anyMatch(c -> c.code.equalsIgnoreCase(code) && c.name.equalsIgnoreCase(name));
+                .anyMatch(c -> c.getCode().equalsIgnoreCase(code) && c.getName().equalsIgnoreCase(name));
 
        if (isSimilarProduct) {
            IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Encontrado no sistema.", code, name));
