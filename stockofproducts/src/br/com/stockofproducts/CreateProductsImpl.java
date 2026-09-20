@@ -28,37 +28,57 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
         isCountryFormat = countryFormat.matches("[0-9]{3}");
         isCodeFactory = codeFactory.matches("[0-9]{6}");
         isCode = code.matches("[0-9]{6}");
-
         if (isCountryFormat) {
             if (isCodeFactory) {
-                if (isCode) {
-                    CreateProductsImpl createProducts = new CreateProductsImpl(countryFormat, codeFactory, code, name, price, amount);
-                    createdProductsList.add(createProducts);
+                if (isCode && isSimilarProduct(code) == false) {
+                    if (price > 0) {
+                        if (amount > 0) {
+                            CreateProductsImpl createProducts = new CreateProductsImpl(countryFormat, codeFactory, code, name, price, amount);
+                            createdProductsList.add(createProducts);
+                        } else {
+                            IO.println("-----------------------------------------------------------------------------------------------");
+                            IO.println(String.format(localeBr, "Quantidade de produtos %d -> deve ser maior do que zero.", amount));
+                            IO.println("-----------------------------------------------------------------------------------------------");
+                        }
+                    } else {
+                        IO.println("-----------------------------------------------------------------------------------------------");
+                        IO.println(String.format(localeBr, "O valor %.2f, do produto deve ser maior do que zero", price));
+                        IO.println("-----------------------------------------------------------------------------------------------");
+                    }
 
                 } else {
-                    IO.println("Código do produto inaválido!");
+                    IO.println("-----------------------------------------------------------------------------------------------");
+                    IO.println("Código do produto inaválido para cadastrar!");
+//                    IO.println("-----------------------------------------------------------------------------------------------");
                 }
 
             } else {
+                IO.println("-----------------------------------------------------------------------------------------------");
                 IO.println("Código da empresa inválido!");
+                IO.println("-----------------------------------------------------------------------------------------------");
             }
 
         } else {
+            IO.println("-----------------------------------------------------------------------------------------------");
             IO.println("Código do país inválido!");
+            IO.println("-----------------------------------------------------------------------------------------------");
         }
     }
 
-    private boolean isSimilarProduct(String code, String name) {
+    private boolean isSimilarProduct(String code) {
         boolean isSimilarProduct;
 
        isSimilarProduct = createdProductsList
                 .stream()
-                .anyMatch(c -> c.getCode().equalsIgnoreCase(code) && c.getName().equalsIgnoreCase(name));
+                .anyMatch(c -> c.getCode().equalsIgnoreCase(code));
 
-       if (isSimilarProduct == true) {
-           IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Encontrado no sistema.", code, name));
+       if (isSimilarProduct) {
+//           IO.println("-----------------------------------------------------------------------------------------------");
+           IO.println(String.format(localeBr, "Produto: Cod.: %s -> Já existente no sistema.\nImpossível cadastrar!", code));
        } else {
-           IO.println(String.format(localeBr, "Produto: Cod.: %s | % -> Inexistente!", code, name));
+           IO.println("-----------------------------------------------------------------------------------------------");
+           IO.println(String.format(localeBr, "Produto: Cod.: %s -> Cadastrado com sucesso!", code));
+           IO.println("-----------------------------------------------------------------------------------------------");
        }
 
        return isSimilarProduct;
@@ -66,6 +86,20 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
 
     @Override
     public void findProduct(String code) {
+       boolean isSameProduct = createdProductsList
+                .stream()
+                .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
+
+       if (isSameProduct) {
+           IO.println("---------------------------------------------------------------------------------------------------------------------------------");
+           createdProductsList
+                   .stream()
+                   .filter(p -> p.getCode().equalsIgnoreCase(code))
+                   .forEach(p -> IO.println(p));
+           IO.println("---------------------------------------------------------------------------------------------------------------------------------");
+       } else {
+           IO.println(String.format(localeBr, "Código de produto %s: Inválido -> Produto não encontrado!", code));
+       }
 
     }
 
@@ -91,8 +125,13 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
 
     @Override
     public void printProduct() {
-        createdProductsList
-                .stream()
-                .forEach(c -> IO.println(c));
+        IO.println("---------------------------------------------------------------------------------------------------------------------------------");
+        IO.println("> ESTOQUE DE PRODUTOS <");
+        if (!createdProductsList.isEmpty()) {
+            createdProductsList
+                    .stream()
+                    .forEach(c -> IO.println(c));
+        }
+        IO.println("---------------------------------------------------------------------------------------------------------------------------------");
     }
 }
