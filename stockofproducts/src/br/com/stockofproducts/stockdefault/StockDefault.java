@@ -1,5 +1,7 @@
 package br.com.stockofproducts.stockdefault;
 
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 public abstract class StockDefault {
@@ -15,6 +17,8 @@ public abstract class StockDefault {
     private String codeFactory;
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
+
+    private NumberFormat nf = NumberFormat.getCurrencyInstance(localeBr);
 
     public StockDefault(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
         this.id = staticId;
@@ -41,7 +45,7 @@ public abstract class StockDefault {
         return name;
     }
 
-    public double getPrice() {
+    protected double getPrice() {
         return price;
     }
 
@@ -57,9 +61,25 @@ public abstract class StockDefault {
         return codeFactory;
     }
 
+    protected void setCode(String code) {
+        this.code = code;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setPrice(double price) {
+        this.price = price;
+    }
+
+    protected void setAmount(long amount) {
+        this.amount = amount;
+    }
+
     public abstract void createProduct(String countryFormat, String codeFactory, String code, String name, double price, long amount);
     public abstract void findProduct(String code);
-    public abstract void changeProductName(String code, String name);
+    public abstract void changeProductName(String code, String newProductName);
     public abstract void changeProductPrice(String code, double price);
     public abstract void changeProductAmount(String code, long amount);
     public abstract void deleteProduct(String code);
@@ -67,6 +87,7 @@ public abstract class StockDefault {
 
     @Override
     public String toString() {
-        return String.format(localeBr, "ID: %d | Cod.: %s | Prod.: %-50s | Preço: %-15.2f | Qtde: %d", id, code, name, price, amount);
+        String priceString = nf.format(price);
+        return String.format(localeBr, "ID: %d | Cod.: %s | Prod.: %-100s | Preço: %-15s | Qtde: %d", id, code, name, priceString, amount);
     }
 }
