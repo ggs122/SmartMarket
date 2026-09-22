@@ -20,13 +20,18 @@ public abstract class StockDefault {
 
     private NumberFormat nf = NumberFormat.getCurrencyInstance(localeBr);
 
-    public StockDefault(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
+    protected StockDefault(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
         this.id = staticId;
         StockDefault.staticId++;
         this.code = code;
         this.name = name;
         this.price = price;
         this.amount = amount;
+        this.countryFormat = countryFormat;
+        this.codeFactory = codeFactory;
+    }
+
+    protected StockDefault(String countryFormat, String codeFactory) {
         this.countryFormat = countryFormat;
         this.codeFactory = codeFactory;
     }
