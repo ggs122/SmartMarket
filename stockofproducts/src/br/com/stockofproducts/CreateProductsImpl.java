@@ -15,6 +15,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     private boolean isCode;
     private boolean isCountryFormat;
     private boolean isCodeFactory;
+    private List<CreateProductsImpl> setUpCompanyDataAtTheSystemLevel;
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
     private NumberFormat priceFormated = NumberFormat.getCurrencyInstance(localeBr);
 
@@ -65,6 +66,31 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                 IO.println("-----------------------------------------------------------------------------------------------");
             }
 
+        } else {
+            IO.println("-----------------------------------------------------------------------------------------------");
+            IO.println("Código do país inválido!");
+            IO.println("-----------------------------------------------------------------------------------------------");
+        }
+    }
+
+    public void setUpCompanyDataAtTheSystemLevel(String countryFormat, String codeFactory) {
+        isCountryFormat = countryFormat.matches("[0-9]{3}");
+        isCodeFactory = codeFactory.matches("[0-9]{6}");
+        if (isCountryFormat) {
+            if (isCodeFactory) {
+                if (getCountryFormat() == null && getCodeFactory() == null) {
+                    CreateProductsImpl createSetUpCompanyData = new CreateProductsImpl(countryFormat, codeFactory);
+                    setUpCompanyDataAtTheSystemLevel = List.of(createSetUpCompanyData);
+                } else {
+                    IO.println("-----------------------------------------------------------------------------------------------");
+                    IO.println(String.format(localeBr, "O código do país e da empresa já foram cadastrados, anteriormente.\nImpossível cadastrar com País: [%s] e Empresa: [%s]", countryFormat, codeFactory));
+                    IO.println("-----------------------------------------------------------------------------------------------");
+                }
+            } else {
+            IO.println("-----------------------------------------------------------------------------------------------");
+            IO.println("Código da empresa inválido!");
+            IO.println("-----------------------------------------------------------------------------------------------");
+        }
         } else {
             IO.println("-----------------------------------------------------------------------------------------------");
             IO.println("Código do país inválido!");

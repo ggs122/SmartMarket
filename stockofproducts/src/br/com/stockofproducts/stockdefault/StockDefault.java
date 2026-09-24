@@ -66,6 +66,14 @@ public abstract class StockDefault {
         return codeFactory;
     }
 
+    protected void setCountryFormat(String countryFormat) {
+        this.countryFormat = countryFormat;
+    }
+
+    protected void setCodeFactory(String codeFactory) {
+        this.codeFactory = codeFactory;
+    }
+
     protected void setCode(String code) {
         this.code = code;
     }
