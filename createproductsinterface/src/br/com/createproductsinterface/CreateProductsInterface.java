@@ -9,7 +9,7 @@ public interface CreateProductsInterface {
     void changeProductPrice(String code, double price);
     void changeProductAmount(String code, long amount);
     void deleteProduct(String code);
-    void minusProduct(String code, long amount);
+    void addAditionalProductsAtTheSystemLevel(String code, long amount);
     void printProduct();
 
 }

@@ -96,7 +96,8 @@ public abstract class StockDefault {
     public abstract void changeProductPrice(String code, double price);
     public abstract void changeProductAmount(String code, long amount);
     public abstract void deleteProduct(String code);
-    public abstract  void AddAditionalProductsAtTheSystemLevel(String code, long amount);
+    public abstract  void addAditionalProductsAtTheSystemLevel(String code, long amount);
+    public abstract void minusProduct(String code, long amount);
     public abstract void printProduct();
 
     @Override

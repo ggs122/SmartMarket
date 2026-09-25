@@ -33,18 +33,25 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
 
     @Override
     public void createProduct(String code, String name, double price, long amount) {
+
+      boolean isfactoryDataLevel = setUpCompanyDataAtTheSystemLevel
+                .stream()
+                .anyMatch(s -> s.getCountryFormat() != null && s.getCodeFactory() != null);
+
         isCode = code.matches("[0-9]{6}");
-
-
                 if (isCode && isSimilarProduct(code) == false) {
                     if (price > 0) {
                         if (amount > 0) {
-                            setUpCompanyDataAtTheSystemLevel
-//                                    .stream()
-                                    .forEach(s -> {
-                                        CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, price, amount);
-                                        createdProductsList.add(createProducts);
-                                    });
+                            if (isfactoryDataLevel) {
+                                setUpCompanyDataAtTheSystemLevel
+                                        .forEach(s -> {
+                                            CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, price, amount);
+                                            createdProductsList.add(createProducts);
+                                        });
+                            } else {
+                                IO.println("Códigos do país e da empresa ainda não foram cadastrados, favor cadastre!");
+                            }
+
                         } else {
                             IO.println("-----------------------------------------------------------------------------------------------");
                             IO.println(String.format(localeBr, "Quantidade de produtos %d -> deve ser maior do que zero.", amount));
@@ -97,7 +104,6 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                 .anyMatch(c -> c.getCode().equalsIgnoreCase(code));
 
        if (isSimilarProduct) {
-//           IO.println("-----------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Produto: Cod.: %s -> Já existente no sistema.\nImpossível cadastrar!", code));
        } else {
            IO.println("-----------------------------------------------------------------------------------------------");
@@ -207,16 +213,34 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
          IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
          IO.println("-----------------------------------------------------------------------------------------------");
      }
-
-    }
-
-    //TODO Parei Aqui
-    @Override
-    public void AddAditionalProductsAtTheSystemLevel(String code, long amount) {
-
     }
 
     @Override
+    public void addAditionalProductsAtTheSystemLevel(String code, long amount) {
+      boolean isSameProduct = createdProductsList
+                .stream()
+                .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
+      if (isSameProduct) {
+          createdProductsList
+                  .stream()
+                  .filter(p -> p.getCode().equalsIgnoreCase(code))
+                  .forEach(p -> {
+                      long newAmount = p.getAmount() + amount;
+                      p.setAmount(newAmount);
+                      IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                      IO.println(String.format(localeBr, "Produto: [%s], Código: [%s] -> Adicionado a quantidade de [%d], produto(s) com sucesso!", p.getName(), p.getCode(), amount));
+                      IO.println(String.format(localeBr, "Nova quantidade em estoque: [%d] produto(s).", p.getAmount()));
+                      IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                  });
+      } else {
+          IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+          IO.println(String.format(localeBr, "Código de produto: %s -> inexistente, impossível adicionar a quantidade de [%d] produto(s).", code, amount));
+          IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+      }
+
+    }
+
+
     public void minusProduct(String code, long amount) {
        boolean isSameProduct = createdProductsList
                 .stream()
