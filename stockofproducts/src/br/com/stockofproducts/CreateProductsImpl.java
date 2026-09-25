@@ -32,17 +32,19 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     static List<CreateProductsImpl> createdProductsList = new ArrayList<>();
 
     @Override
-    public void createProduct(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
-        isCountryFormat = countryFormat.matches("[0-9]{3}");
-        isCodeFactory = codeFactory.matches("[0-9]{6}");
+    public void createProduct(String code, String name, double price, long amount) {
         isCode = code.matches("[0-9]{6}");
-        if (isCountryFormat) {
-            if (isCodeFactory) {
+
+
                 if (isCode && isSimilarProduct(code) == false) {
                     if (price > 0) {
                         if (amount > 0) {
-                            CreateProductsImpl createProducts = new CreateProductsImpl(countryFormat, codeFactory, code, name, price, amount);
-                            createdProductsList.add(createProducts);
+                            setUpCompanyDataAtTheSystemLevel
+//                                    .stream()
+                                    .forEach(s -> {
+                                        CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, price, amount);
+                                        createdProductsList.add(createProducts);
+                                    });
                         } else {
                             IO.println("-----------------------------------------------------------------------------------------------");
                             IO.println(String.format(localeBr, "Quantidade de produtos %d -> deve ser maior do que zero.", amount));
@@ -58,21 +60,10 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                     IO.println("-----------------------------------------------------------------------------------------------");
                     IO.println("Código do produto inaválido para cadastrar!");
 //                    IO.println("-----------------------------------------------------------------------------------------------");
-                }
-
-            } else {
-                IO.println("-----------------------------------------------------------------------------------------------");
-                IO.println("Código da empresa inválido!");
-                IO.println("-----------------------------------------------------------------------------------------------");
-            }
-
-        } else {
-            IO.println("-----------------------------------------------------------------------------------------------");
-            IO.println("Código do país inválido!");
-            IO.println("-----------------------------------------------------------------------------------------------");
-        }
+                 }
     }
 
+    @Override
     public void setUpCompanyDataAtTheSystemLevel(String countryFormat, String codeFactory) {
         isCountryFormat = countryFormat.matches("[0-9]{3}");
         isCodeFactory = codeFactory.matches("[0-9]{6}");
@@ -216,6 +207,12 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
          IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
          IO.println("-----------------------------------------------------------------------------------------------");
      }
+
+    }
+
+    //TODO Parei Aqui
+    @Override
+    public void AddAditionalProductsAtTheSystemLevel(String code, long amount) {
 
     }
 

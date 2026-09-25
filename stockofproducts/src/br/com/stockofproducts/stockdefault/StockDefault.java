@@ -90,17 +90,18 @@ public abstract class StockDefault {
         this.amount = amount;
     }
 
-    public abstract void createProduct(String countryFormat, String codeFactory, String code, String name, double price, long amount);
+    public abstract void createProduct(String code, String name, double price, long amount);
     public abstract void findProduct(String code);
     public abstract void changeProductName(String code, String newProductName);
     public abstract void changeProductPrice(String code, double price);
     public abstract void changeProductAmount(String code, long amount);
     public abstract void deleteProduct(String code);
+    public abstract  void AddAditionalProductsAtTheSystemLevel(String code, long amount);
     public abstract void printProduct();
 
     @Override
     public String toString() {
         String priceString = nf.format(price);
-        return String.format(localeBr, "ID: %d | Cod.: %s | Prod.: %-100s | Preço: %-15s | Qtde: %d", id, code, name, priceString, amount);
+        return String.format(localeBr, "ID: %d | Cod.: %s%s%s | Prod.: %-100s | Preço: %-15s | Qtde: %d", id, countryFormat, codeFactory, code, name, priceString, amount);
     }
 }
