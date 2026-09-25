@@ -13,7 +13,7 @@ public abstract class CustomerDefault {
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
-    private CustomerDefault(int customerId, String customerID, String customerCpf, String customerName, String customerPhone) {
+    protected CustomerDefault(int customerId, String customerID, String customerCpf, String customerName, String customerPhone) {
         this.customerId = customerId;
         this.customerID = customerID;
         this.customerCpf = customerCpf;
@@ -54,6 +54,7 @@ public abstract class CustomerDefault {
     }
 
     public abstract void createCustomer(String cutomerID, String customercpf, String customerName, String customerPhone);
+    public abstract void deleteCustomer(String customerID);
     public abstract void changeID(String customerCpf);
     public abstract void changeCpf(String customerID);
     public abstract void changeName(String ID);
