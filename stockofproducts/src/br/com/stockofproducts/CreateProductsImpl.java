@@ -20,6 +20,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     private NumberFormat priceFormated = NumberFormat.getCurrencyInstance(localeBr);
 
     private CreateProductsImpl(String countryFormat, String codeFactory) {
+
         super(countryFormat, codeFactory);
     }
 

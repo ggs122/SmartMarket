@@ -4,8 +4,8 @@ import java.util.Locale;
 
 public abstract class CustomerDefault {
 
-    private long customerId;
-    private static long customerIdStatic;
+    private long customerId = customerIdStatic;
+    private static long customerIdStatic = 1000;
     private String customerID;
     private String customerCpf;
     private String customerName;
