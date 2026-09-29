@@ -36,7 +36,24 @@ public final class CustomerUtills {
 
         boolean isPhone;
 
-        customerPhone.matches("");
+        isPhone = customerPhone.matches("^\\(?[0-9]{2}\\)?\\s?(?:9[0-9]{4}|[0-9]{4})?[-.\\s]?[0-9]{4}$");
+
+        if (isPhone) {
+            IO.println(String.format(Locale.forLanguageTag("pt-BR"), "Formato de telefone: %s -> Válido.", customerPhone));
+        } else {
+            IO.println(String.format(Locale.forLanguageTag("pt-BR"), "Formato de telefone: %s -> Inválido.", customerPhone));
+        }
+        return isPhone;
+    }
+
+    //TODO parei aqui!
+    public static boolean checkingIsSameCustomer(String ID, String cpf) {
+        boolean finalResult;
+
+        if (ID.equalsIgnoreCase(ID))
+
+
+
 
     }
 
@@ -47,6 +64,9 @@ public final class CustomerUtills {
 
         boolean testBoolean2 = CustomerUtills.checkingCustomerCpf("256.652.195-75");
         System.out.println(testBoolean2);
+
+        boolean testBoolean3 = CustomerUtills.checkingCustomerPhone("(21)5468-5689");
+        System.out.println(testBoolean3);
     }
 
 }
