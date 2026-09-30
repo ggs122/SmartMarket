@@ -5,7 +5,7 @@ import java.util.Locale;
 public abstract class CustomerDefault {
 
     private long customerId = customerIdStatic;
-    private static long customerIdStatic = 1000;
+    protected static long customerIdStatic = 1000;
     private String customerID;
     private String customerCpf;
     private String customerName;
@@ -13,13 +13,15 @@ public abstract class CustomerDefault {
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
-    protected CustomerDefault(int customerId, String customerID, String customerCpf, String customerName, String customerPhone) {
+    protected CustomerDefault(long customerId, String customerID, String customerCpf, String customerName, String customerPhone) {
         this.customerId = customerId;
         this.customerID = customerID;
         this.customerCpf = customerCpf;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
     }
+
+    protected CustomerDefault() {}
 
     protected String getCustomerID() {
         return customerID;

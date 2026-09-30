@@ -45,28 +45,4 @@ public final class CustomerUtills {
         }
         return isPhone;
     }
-
-    //TODO parei aqui!
-    public static boolean checkingIsSameCustomer(String ID, String cpf) {
-        boolean finalResult;
-
-        if (ID.equalsIgnoreCase(ID))
-
-
-
-
-    }
-
-    static void main(String[] args) {
-
-       boolean testBoolean = CustomerUtills.checkingCustomerID("15.235.589-7");
-        System.out.println(testBoolean);
-
-        boolean testBoolean2 = CustomerUtills.checkingCustomerCpf("256.652.195-75");
-        System.out.println(testBoolean2);
-
-        boolean testBoolean3 = CustomerUtills.checkingCustomerPhone("(21)5468-5689");
-        System.out.println(testBoolean3);
-    }
-
 }

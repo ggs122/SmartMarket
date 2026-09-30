@@ -1,5 +1,6 @@
 package br.com.app;
 
+import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 
 import java.util.ServiceLoader;
@@ -32,6 +33,11 @@ public class Launch {
        createProducts1.addAditionalProductsAtTheSystemLevel("000260", 50);
        createProducts1.addAditionalProductsAtTheSystemLevel("000261", 50);
        createProducts1.printProduct();
+
+       var createCustomer1 = ServiceLoader.load(CreateCustomerInterface.class).findFirst().orElse(null);
+       createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
+       createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
+       createCustomer1.print();
 
 
     }
