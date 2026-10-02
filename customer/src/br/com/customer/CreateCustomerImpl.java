@@ -1,6 +1,7 @@
 package br.com.customer;
 
 import br.com.createcustomerinterface.CreateCustomerInterface;
+import br.com.customer.customerdefault.CustomerDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +34,36 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
                     if (isSameCustomer) {
                         CreateCustomerImpl createCustomer = new CreateCustomerImpl(CustomerDefault.customerIdStatic++, cutomerID, customerCpf, customerName, customerPhone);
                         creatCustomerImplList.add(createCustomer);
+                        if (!creatCustomerImplList.isEmpty()) {
+                            IO.println("--------------------------------------------------------------------------------------------------------------------");
+                            IO.println("Cliente cadastrado com sucesso:");
+                            creatCustomerImplList
+                                    .stream()
+                                    .filter(c -> c.getCustomerID().equalsIgnoreCase(cutomerID) && c.getCustomerCpf().equalsIgnoreCase(customerCpf) && c.getCustomerName().equalsIgnoreCase(customerName) && c.getCustomerPhone().equalsIgnoreCase(customerPhone))
+                                    .forEach(c -> IO.println(c));
+                            IO.println("--------------------------------------------------------------------------------------------------------------------");
+                        } else {
+                            IO.println("Nenhum cliente foi cadastrado -> Cadastre!");
+                        }
                     } else {
+                        IO.println("--------------------------------------------------------------------------------------------------------");
                         IO.println(String.format(localeBr, "Impossível cadastrar o cliente com identidade N°: %s e CPF Nº: %s", cutomerID, customerCpf));
+                        IO.println("--------------------------------------------------------------------------------------------------------");
                     }
                 } else {
+                    IO.println("--------------------------------------------------------------------------------------------------------");
                     IO.println(String.format(localeBr, "Impossível cadastrar o cliente com o formato de telefone: %s.\nFavor digite um formato válido.", customerPhone));
+                    IO.println("--------------------------------------------------------------------------------------------------------");
                 }
             } else {
+                IO.println("--------------------------------------------------------------------------------------------------------");
                 IO.println(String.format(localeBr, "Impossível cadastrar o cliente com o formato de CPF: %s.\nFavor digite um formato válido.", customerCpf));
+                IO.println("--------------------------------------------------------------------------------------------------------");
             }
         } else {
+            IO.println("--------------------------------------------------------------------------------------------------------");
             IO.println(String.format(localeBr, "Impossível cadastrar o cliente com o formato de identidade: %s.\nFavor digite um formato válido.", cutomerID));
+            IO.println("--------------------------------------------------------------------------------------------------------");
         }
 
     }
@@ -71,11 +91,36 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
 
     @Override
     public void deleteCustomer(String customerID) {
+       boolean isSameCustomer = creatCustomerImplList
+                .stream()
+                .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
+
+       if (isSameCustomer) {
+           creatCustomerImplList.removeIf(c -> c.getCustomerID().equalsIgnoreCase(customerID));
+           IO.println("--------------------------------------------------------------------------------------------------------");
+           IO.println(String.format(localeBr, "Cliente, identidade N° %s -> deletado com sucesso do sistema.", customerID));
+           IO.println("--------------------------------------------------------------------------------------------------------");
+       } else {
+           IO.println("--------------------------------------------------------------------------------------------------------");
+           IO.println(String.format(localeBr, "Identidade: %s -> Inexistente!", customerID));
+           IO.println("--------------------------------------------------------------------------------------------------------");
+       }
 
     }
 
+    //TODO -> Parei aqui.
     @Override
     public void changeID(String customerCpf) {
+     boolean isSameCustomer = creatCustomerImplList
+                .stream()
+                .anyMatch(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf));
+
+     if (isSameCustomer) {
+//         creatCustomerImplList
+//                 .stream()
+//                 .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
+//                 .forEach(c -> c.set));
+     }
 
     }
 
@@ -97,11 +142,16 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     @Override
     public void print() {
         if (!creatCustomerImplList.isEmpty()) {
+            IO.println("---------------------------------------------------------------------------------------------------------------------------");
+            IO.println("Lista de Clientes cadastrados:");
             creatCustomerImplList
                     .stream()
                     .forEach(c -> IO.println(c));
+            IO.println("---------------------------------------------------------------------------------------------------------------------------");
         } else {
+            IO.println("---------------------------------------------------------------------------------------------------------------------------");
             IO.println("Não foi cadastrado nenhum cliente -> Impossível mostrar lista de clientes cadastrados.");
+            IO.println("---------------------------------------------------------------------------------------------------------------------------");
         }
     }
 }

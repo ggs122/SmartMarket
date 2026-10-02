@@ -37,6 +37,7 @@ public class Launch {
        var createCustomer1 = ServiceLoader.load(CreateCustomerInterface.class).findFirst().orElse(null);
        createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
        createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
+       createCustomer1.createCustomer("22.951.895-6", "501.562.798-60", "Thais Lima de Souza", "(21)956898754");
        createCustomer1.print();
 
 

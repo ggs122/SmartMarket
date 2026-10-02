@@ -1,4 +1,4 @@
-package br.com.customer;
+package br.com.customer.customerdefault;
 
 import java.util.Locale;
 
@@ -65,7 +65,7 @@ public abstract class CustomerDefault {
 
     @Override
     public String toString() {
-        return String.format(localeBr, "Id: %d | Identidade N°: %s | CPF N°: %s | Nome %s | Tell N° %s", customerId, customerID, customerCpf, customerName, customerPhone);
+        return String.format(localeBr, "Id: %d | Identidade N°: %s | CPF N°: %s | Nome %-25s | Tell N° %s", customerId, customerID, customerCpf, customerName, customerPhone);
     }
 }
 
