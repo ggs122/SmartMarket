@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/createproductsinterface/createproductsinterface.iml" filepath="$PROJECT_DIR$/createproductsinterface/createproductsinterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/customer/customer.iml" filepath="$PROJECT_DIR$/customer/customer.iml" />
       <module fileurl="file://$PROJECT_DIR$/stockofproducts/stockofproducts.iml" filepath="$PROJECT_DIR$/stockofproducts/stockofproducts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/users/users.iml" filepath="$PROJECT_DIR$/users/users.iml" />
     </modules>
   </component>
 </project>

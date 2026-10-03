@@ -1,6 +1,10 @@
 package br.com.stockofproducts.stockdefault;
 
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -10,9 +14,10 @@ public abstract class StockDefault {
     private static long staticId = 10000;
     private String code;
     private String name;
+    private String categories;
     private double price;
     private long amount;
-    private String categories;
+    private LocalDateTime createdAt;
 
     private String countryFormat;
     private String codeFactory;
@@ -21,13 +26,14 @@ public abstract class StockDefault {
 
     private NumberFormat nf = NumberFormat.getCurrencyInstance(localeBr);
 
-    protected StockDefault(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount) {
+    protected StockDefault(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount, LocalDateTime createdAt) {
         this.id = staticId;
         StockDefault.staticId++;
         this.code = code;
         this.name = name;
         this.price = price;
         this.amount = amount;
+        this.createdAt = createdAt;
         this.countryFormat = countryFormat;
         this.codeFactory = codeFactory;
         this.categories = categories;
@@ -62,6 +68,10 @@ public abstract class StockDefault {
 
     protected long getAmount() {
         return amount;
+    }
+
+    protected LocalDateTime getCreatedAt(){
+        return createdAt;
     }
 
     protected String getCountryFormat() {
@@ -109,6 +119,9 @@ public abstract class StockDefault {
     @Override
     public String toString() {
         String priceString = nf.format(price);
-        return String.format(localeBr, "ID: %d | Cod.: %s%s%s | Prod.: %-100s | Preço: %-15s | Qtde: %d", id, countryFormat, codeFactory, code, name, priceString, amount);
+        LocalDateTime localDateTimeAdd = getCreatedAt().now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        String createdAtFormated = localDateTimeAdd.format(formatter.withLocale(localeBr));
+        return String.format(localeBr, "ID: %d | Cod.: %s%s%s | Prod.: %-100s | Preço: %-15s | Qtde: %-7d | Add. estoque em: %s", id, countryFormat, codeFactory, code, name, priceString, amount, createdAtFormated);
     }
 }

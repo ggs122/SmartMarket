@@ -1,5 +1,7 @@
 package br.com.createproductsinterface;
 
+import java.time.LocalDateTime;
+
 public interface CreateProductsInterface {
 
     void createProduct(String code, String name, String categories, double price, long amount);

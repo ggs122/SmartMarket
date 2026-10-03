@@ -4,6 +4,8 @@ import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.stockofproducts.stockdefault.StockDefault;
 
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,8 +26,8 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
         super(countryFormat, codeFactory);
     }
 
-    private CreateProductsImpl(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount) {
-        super(countryFormat, codeFactory, code, name, categories, price, amount);
+    private CreateProductsImpl(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount, LocalDateTime createdAt) {
+        super(countryFormat, codeFactory, code, name, categories, price, amount, createdAt);
     }
 
     public CreateProductsImpl(){}
@@ -46,7 +48,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                             if (isfactoryDataLevel) {
                                 setUpCompanyDataAtTheSystemLevel
                                         .forEach(s -> {
-                                            CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, CreateProductsUtills.returnStringByEnum(categories), price, amount);
+                                            CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, CreateProductsUtills.returnStringByEnum(categories), price, amount, LocalDateTime.now());
                                             createdProductsList.add(createProducts);
                                         });
                             } else {
