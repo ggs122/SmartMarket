@@ -2,6 +2,7 @@ package br.com.app;
 
 import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
+import br.com.stockofproducts.CreateProductsUtills;
 
 import java.util.ServiceLoader;
 
@@ -13,10 +14,10 @@ public class Launch {
 
        var createProducts1 = ServiceLoader.load(CreateProductsInterface.class).findFirst().orElse(null);
        createProducts1.setUpCompanyDataAtTheSystemLevel("057", "053256");
-       createProducts1.createProduct("002659", "Arroz Raroz - 5Kg", 23.00, 55);
-       createProducts1.createProduct("000260", "Miojo - Nissim - Pac.", 4.50, 25);
-       createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", 7.50, 110);
-       createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", 7.50, 110);
+       createProducts1.createProduct("002659", "Arroz Raroz - 5Kg", "GRÃOS", 23.00, 55);
+       createProducts1.createProduct("000260", "Miojo - Nissim - Pac.", "MASSAS", 4.50, 25);
+       createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", "MASSAS", 7.50, 110);
+       createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", "MASSAS", 7.50, 110);
        createProducts1.printProduct();
        createProducts1.changeProductName("000261", "Macarrão Talharim - 500g");
        createProducts1.printProduct();
@@ -39,8 +40,14 @@ public class Launch {
        createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
        createCustomer1.createCustomer("22.951.895-6", "501.562.798-60", "Thais Lima de Souza", "(21)956898754");
        createCustomer1.print();
-
-
+       createCustomer1.changeID("105.265.897-50", "31.160.598-5");
+       createCustomer1.print();
+       createCustomer1.changeCpf("22.951.895-6", "205.380.800-55");
+       createCustomer1.print();
+       createCustomer1.changeName("22.951.895-6", "Yolinda Tavares Albuquerque");
+       createCustomer1.print();
+       createCustomer1.changePhone("22.951.895-6", "(21)971556598");
+       createCustomer1.print();
     }
 
 }

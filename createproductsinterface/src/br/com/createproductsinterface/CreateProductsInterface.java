@@ -2,7 +2,7 @@ package br.com.createproductsinterface;
 
 public interface CreateProductsInterface {
 
-    void createProduct(String code, String name, double price, long amount);
+    void createProduct(String code, String name, String categories, double price, long amount);
     void setUpCompanyDataAtTheSystemLevel(String countryFormat, String codeFactory);
     void findProduct(String code);
     void changeProductName(String code, String newProductName);

@@ -108,35 +108,129 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
 
     }
 
-    //TODO -> Parei aqui.
+
     @Override
-    public void changeID(String customerCpf) {
-     boolean isSameCustomer = creatCustomerImplList
+    public void changeID(String customerCpf, String newCustomerID) {
+        boolean isIDFormat = CustomerUtills.checkingCustomerID(newCustomerID);
+        boolean isSameCustomer = creatCustomerImplList
                 .stream()
                 .anyMatch(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf));
 
      if (isSameCustomer) {
-//         creatCustomerImplList
-//                 .stream()
-//                 .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
-//                 .forEach(c -> c.set));
+         if (isIDFormat) {
+             creatCustomerImplList
+                     .stream()
+                     .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
+                     .forEach(c -> c.setCustomerID(newCustomerID));
+             IO.println("-------------------------------------------------------------------------------");
+             IO.println("Alteração realizada com sucesso!");
+             creatCustomerImplList
+                     .stream()
+                             .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
+                                     .forEach(c -> IO.println(String.format(localeBr, "Nova identidade N° %s", c.getCustomerID())));
+             IO.println("-------------------------------------------------------------------------------");
+         } else {
+             IO.println("-------------------------------------------------------------------------------");
+             IO.println("Digite um formato válido!");
+             IO.println("-------------------------------------------------------------------------------");
+         }
+     } else {
+         IO.println("-------------------------------------------------------------------------------");
+         IO.println(String.format(localeBr, "Formato do CPF: %s, inválido ou CPF inexistente!", customerCpf));
+         IO.println("-------------------------------------------------------------------------------");
      }
 
     }
 
     @Override
-    public void changeCpf(String customerID) {
+    public void changeCpf(String customerID, String newCustomerCpf) {
+       boolean isSimilarCustomerID = creatCustomerImplList
+                .stream()
+                .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
 
+       if (isSimilarCustomerID) {
+         boolean isFormatCpf = CustomerUtills.checkingCustomerCpf(newCustomerCpf);
+           if (isFormatCpf) {
+               creatCustomerImplList
+                       .stream()
+                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                       .forEach(c -> c.setCustomerCpf(newCustomerCpf));
+               IO.println("---------------------------------------------------------------------");
+               IO.println("Alteração realizada com sucesso!");
+               creatCustomerImplList
+                       .stream()
+                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                       .forEach(c -> IO.println(String.format(localeBr, "Novo CPF N° -> %s", c.getCustomerCpf())));
+               IO.println("---------------------------------------------------------------------");
+           } else {
+               IO.println("-------------------------------");
+               IO.println("Digite um número de CPF válido.");
+               IO.println("-------------------------------");
+           }
+       } else {
+           IO.println("------------------------------------------------------------------------");
+           IO.println(String.format(localeBr,"Identidade N° %s -> Inválido ou inexistente", customerID));
+           IO.println("------------------------------------------------------------------------");
+       }
     }
 
     @Override
-    public void changeName(String ID) {
+    public void changeName(String customerID, String newName) {
+      boolean isSimilarCustomerID = creatCustomerImplList
+                .stream()
+                .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
 
+      if (isSimilarCustomerID) {
+          creatCustomerImplList
+                  .stream()
+                  .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                  .forEach(c -> {
+                      IO.println("------------------------------------------------------------------------");
+                      IO.println("Alteração realizada com sucesso!");
+                          c.setCustomerName(newName);
+
+                          creatCustomerImplList
+                                  .stream()
+                                  .filter(cr -> cr.getCustomerID().equalsIgnoreCase(customerID))
+                                  .forEach(cr -> IO.println(String.format(localeBr, "Novo Nome -> %s", cr.getCustomerName())));
+                      IO.println("------------------------------------------------------------------------");
+                  });
+      } else {
+          IO.println("------------------------------------------------------------------------");
+          IO.println(String.format(localeBr,"Identidade N° %s -> Inválido ou inexistente", customerID));
+          IO.println("------------------------------------------------------------------------");
+      }
     }
 
     @Override
-    public void changePhone(String ID) {
+    public void changePhone(String customerID, String newCustomerPhone) {
+       boolean isSameID = creatCustomerImplList
+                .stream()
+                .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
 
+       if (isSameID) {
+           boolean isPhoneFormat = CustomerUtills.checkingCustomerPhone(newCustomerPhone);
+           if (isPhoneFormat) {
+               creatCustomerImplList
+                       .stream()
+                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                       .forEach(c -> {
+                           c.setCustomerPhone(newCustomerPhone);
+                           IO.println("------------------------------------------------------------------------------------------------");
+                           IO.println(String.format(localeBr, "Telefone N° alterado com sucesso para -> %s", c.getCustomerPhone()));
+                           IO.println("------------------------------------------------------------------------------------------------");
+                       });
+           } else {
+               IO.println("------------------------------------------------------------------------------------------------");
+               IO.println("Digite um formato de telefone válido!");
+               IO.println("------------------------------------------------------------------------------------------------");
+           }
+
+       } else {
+           IO.println("------------------------------------------------------------------------");
+           IO.println(String.format(localeBr,"Identidade N° %s -> Inválido ou inexistente", customerID));
+           IO.println("------------------------------------------------------------------------");
+       }
     }
 
     @Override

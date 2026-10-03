@@ -12,6 +12,7 @@ public abstract class StockDefault {
     private String name;
     private double price;
     private long amount;
+    private String categories;
 
     private String countryFormat;
     private String codeFactory;
@@ -20,7 +21,7 @@ public abstract class StockDefault {
 
     private NumberFormat nf = NumberFormat.getCurrencyInstance(localeBr);
 
-    protected StockDefault(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
+    protected StockDefault(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount) {
         this.id = staticId;
         StockDefault.staticId++;
         this.code = code;
@@ -29,6 +30,7 @@ public abstract class StockDefault {
         this.amount = amount;
         this.countryFormat = countryFormat;
         this.codeFactory = codeFactory;
+        this.categories = categories;
     }
 
     protected StockDefault(String countryFormat, String codeFactory) {
@@ -48,6 +50,10 @@ public abstract class StockDefault {
 
     protected String getName() {
         return name;
+    }
+
+    protected String getCategories(){
+        return categories;
     }
 
     protected double getPrice() {
@@ -90,7 +96,7 @@ public abstract class StockDefault {
         this.amount = amount;
     }
 
-    public abstract void createProduct(String code, String name, double price, long amount);
+    public abstract void createProduct(String code, String name, String categories, double price, long amount);
     public abstract void findProduct(String code);
     public abstract void changeProductName(String code, String newProductName);
     public abstract void changeProductPrice(String code, double price);

@@ -57,15 +57,15 @@ public abstract class CustomerDefault {
 
     public abstract void createCustomer(String cutomerID, String customercpf, String customerName, String customerPhone);
     public abstract void deleteCustomer(String customerID);
-    public abstract void changeID(String customerCpf);
-    public abstract void changeCpf(String customerID);
-    public abstract void changeName(String ID);
-    public abstract void changePhone(String ID);
+    public abstract void changeID(String customerCpf, String newID);
+    public abstract void changeCpf(String customerID, String newCustomerCpf);
+    public abstract void changeName(String ID, String newName);
+    public abstract void changePhone(String ID, String newCustomerPhone);
     public abstract void print();
 
     @Override
     public String toString() {
-        return String.format(localeBr, "Id: %d | Identidade N°: %s | CPF N°: %s | Nome %-25s | Tell N° %s", customerId, customerID, customerCpf, customerName, customerPhone);
+        return String.format(localeBr, "Id: %d | Identidade N°: %s | CPF N°: %s | Nome %-35s | Tell N° %s", customerId, customerID, customerCpf, customerName, customerPhone);
     }
 }
 

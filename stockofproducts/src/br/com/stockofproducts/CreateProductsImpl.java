@@ -24,8 +24,8 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
         super(countryFormat, codeFactory);
     }
 
-    private CreateProductsImpl(String countryFormat, String codeFactory, String code, String name, double price, long amount) {
-        super(countryFormat, codeFactory, code, name, price, amount);
+    private CreateProductsImpl(String countryFormat, String codeFactory, String code, String name, String categories, double price, long amount) {
+        super(countryFormat, codeFactory, code, name, categories, price, amount);
     }
 
     public CreateProductsImpl(){}
@@ -33,7 +33,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     static List<CreateProductsImpl> createdProductsList = new ArrayList<>();
 
     @Override
-    public void createProduct(String code, String name, double price, long amount) {
+    public void createProduct(String code, String name, String categories, double price, long amount) {
 
       boolean isfactoryDataLevel = setUpCompanyDataAtTheSystemLevel
                 .stream()
@@ -46,7 +46,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
                             if (isfactoryDataLevel) {
                                 setUpCompanyDataAtTheSystemLevel
                                         .forEach(s -> {
-                                            CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, price, amount);
+                                            CreateProductsImpl createProducts = new CreateProductsImpl(s.getCountryFormat(), s.getCodeFactory(), code, name, CreateProductsUtills.returnStringByEnum(categories), price, amount);
                                             createdProductsList.add(createProducts);
                                         });
                             } else {
@@ -285,13 +285,39 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
 
     @Override
     public void printProduct() {
-        IO.println("---------------------------------------------------------------------------------------------------------------------------------");
-        IO.println("> ESTOQUE DE PRODUTOS <");
+        IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         if (!createdProductsList.isEmpty()) {
-            createdProductsList
+            IO.println("> ESTOQUE DE PRODUTOS <");
+           List<String> categoriesString = createdProductsList
                     .stream()
-                    .forEach(c -> IO.println(c));
+                    .map(c -> c.getCategories())
+                    .distinct()
+                    .toList();
+
+
+           categoriesString
+                   .forEach(c -> {
+                       createdProductsList
+                               .stream()
+                               .map(cr -> cr.getCategories())
+                               .distinct()
+                               .forEach(cr -> {
+                                   if (c.equals(cr)) {
+                                       IO.println(String.format(localeBr, "CATEGORIA: %s", c));
+                                       createdProductsList
+                                               .stream()
+                                               .filter(cre -> cre.getCategories().equals(c) && cre.getCategories().equals(cr))
+                                               .forEach(cre -> IO.println(cre));
+                                       IO.println();
+                                   }
+                               });
+                   });
+
+        } else {
+            IO.println("--------------------------------------------------------");
+            IO.println("Não existem produtos cadastrados no estoque -> Cadastre!");
+            IO.println("--------------------------------------------------------");
         }
-        IO.println("---------------------------------------------------------------------------------------------------------------------------------");
+        IO.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 }

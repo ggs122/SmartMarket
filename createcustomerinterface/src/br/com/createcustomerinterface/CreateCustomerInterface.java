@@ -4,10 +4,10 @@ public interface CreateCustomerInterface {
 
     void createCustomer(String cutomerID, String customercpf, String customerName, String customerPhone);
     void deleteCustomer(String customerID);
-    void changeID(String customerCpf);
-    void changeCpf(String customerID);
-    void changeName(String ID);
-    void changePhone(String ID);
+    void changeID(String customerCpf, String newID);
+    void changeCpf(String customerID, String newCustomerCpf);
+    void changeName(String ID, String newName);
+    void changePhone(String ID, String newCustomerPhone);
     void print();
 
 }
