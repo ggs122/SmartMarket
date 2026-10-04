@@ -1,5 +1,7 @@
 package br.com.users;
 
+import java.util.Locale;
+
 public abstract class UsersDefault {
     private int userId;
     private static int staticUserId;
@@ -8,6 +10,8 @@ public abstract class UsersDefault {
     private String jobe_Tittle;
     private String userLogin;
     private String userPassword;
+
+    private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
     private UsersDefault(int userId, String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
         this.userId = userId;
@@ -42,15 +46,15 @@ public abstract class UsersDefault {
         return userPassword;
     }
 
+    public abstract void createUser(String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword);
+    public abstract void userchangeName(String userCpf, String userNewName, String userLogin, String userPassword);
+    public abstract void userChangeCpf(String userName, String userNewCpf, String userLogin, String userPassword);
+    public abstract void userChangeGetJobe_Tittle(String userCpf, String userLogin, String userPassword, String userNewGetJobe_Tittle);
+    public abstract void userChangeLoginAndPasswor(String userCpf, String userOldLogin, String userOldPassword, String userNewLogin, String userNewPassword);
+    public abstract void userPrint();
+
     @Override
     public String toString() {
-        return "UsersDefault{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userCpf='" + userCpf + '\'' +
-                ", jobe_Tittle='" + jobe_Tittle + '\'' +
-                ", userLogin='" + userLogin + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                '}';
+        return String.format(localeBr, "ID: %s | Nome: %s | CPF: %s | Cargo: %s | Login: %s | Senha: %s", userId, userName, userCpf, jobe_Tittle, userLogin, userPassword);
     }
 }
