@@ -1,10 +1,12 @@
-package br.com.users;
+package br.com.users.userdefault;
 
 import java.util.Locale;
 
 public abstract class UsersDefault {
-    private int userId;
-    private static int staticUserId;
+    private long userId = staticUserId;
+    private static long staticUserId = 20000;
+    private long enrollmentNumber = staticEnrolllmentNumber;
+    private static long staticEnrolllmentNumber = 1;
     private String userName;
     private String userCpf;
     private String jobe_Tittle;
@@ -13,7 +15,8 @@ public abstract class UsersDefault {
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
 
-    private UsersDefault(int userId, String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
+    protected UsersDefault(long userId, long enrollmentNumber, String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
+        this.enrollmentNumber = enrollmentNumber;
         this.userId = userId;
         this.userName = userName;
         this.userCpf = userCpf;
@@ -22,8 +25,12 @@ public abstract class UsersDefault {
         this.userPassword = userPassword;
     }
 
-    protected int getUserId() {
+    protected long getUserId() {
         return userId;
+    }
+
+    protected long getEnrollmentNumber() {
+        return enrollmentNumber;
     }
 
     protected String getUserName() {
@@ -55,6 +62,6 @@ public abstract class UsersDefault {
 
     @Override
     public String toString() {
-        return String.format(localeBr, "ID: %s | Nome: %s | CPF: %s | Cargo: %s | Login: %s | Senha: %s", userId, userName, userCpf, jobe_Tittle, userLogin, userPassword);
+        return String.format(localeBr, "ID: %s | Nome: %s | Matrícula %s | CPF: %s | Cargo: %s | Login: %s | Senha: %s", userId, userName, enrollmentNumber, userCpf, jobe_Tittle, userLogin, userPassword);
     }
 }
