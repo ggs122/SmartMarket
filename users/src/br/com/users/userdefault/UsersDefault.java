@@ -53,6 +53,26 @@ public abstract class UsersDefault {
         return userPassword;
     }
 
+    protected void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    protected void setUserCpf(String userCpf) {
+        this.userCpf = userCpf;
+    }
+
+    protected void setJobe_Tittle(String jobe_Tittle) {
+        this.jobe_Tittle = jobe_Tittle;
+    }
+
+    protected void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    protected void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
     public abstract void createUser(String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword);
     public abstract void userchangeName(String userCpf, String userNewName, String userLogin, String userPassword);
     public abstract void userChangeCpf(String userName, String userNewCpf, String userLogin, String userPassword);
