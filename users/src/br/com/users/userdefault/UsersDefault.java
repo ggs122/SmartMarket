@@ -4,9 +4,9 @@ import java.util.Locale;
 
 public abstract class UsersDefault {
     private long userId = staticUserId;
-    private static long staticUserId = 20000;
+    protected static long staticUserId = 20000;
     private long enrollmentNumber = staticEnrolllmentNumber;
-    private static long staticEnrolllmentNumber = 1;
+    protected static long staticEnrolllmentNumber = 1;
     private String userName;
     private String userCpf;
     private String jobe_Tittle;
