@@ -79,6 +79,7 @@ public abstract class UsersDefault {
     public abstract void userChangeGetJobe_Tittle(String userCpf, String userLogin, String userPassword, String userNewGetJobe_Tittle);
     public abstract void userChangeLoginAndPasswor(String userCpf, String userOldLogin, String userOldPassword, String userNewLogin, String userNewPassword);
     public abstract void userPrint();
+    public abstract boolean login(String useLogin, String userPassword);
 
     @Override
     public String toString() {

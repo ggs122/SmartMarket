@@ -157,4 +157,20 @@ public class CreateUsers extends UsersDefault {
         }
 
     }
+
+    @Override
+    public boolean login(String useLogin, String userPassword) {
+
+       boolean isLogin = users
+                .stream()
+                .anyMatch(u -> u.getUserLogin().equalsIgnoreCase(useLogin) && u.getUserPassword().equalsIgnoreCase(userPassword));
+
+       if (isLogin) {
+           IO.println("Login e senha aceitos, acesso concedido.");
+       } else {
+           IO.println("Login e senha, inválidos -> Acesso negado");
+       }
+
+        return isLogin;
+    }
 }
