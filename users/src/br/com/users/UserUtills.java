@@ -9,7 +9,7 @@ public final class UserUtills {
     public static boolean checkingCpf(String userCpf) {
         boolean isCpf;
 
-       isCpf = userCpf.matches("[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}");
+       isCpf = userCpf.matches("[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}");
 
         if (isCpf) {
             IO.println("--------------------------------------------------------------------------------------------------------");

@@ -1,20 +1,23 @@
 package br.com.users;
 
 import br.com.users.userdefault.UsersDefault;
+import br.com.usersinterface.UsersInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CreateUsers extends UsersDefault {
+public class CreateUsersImpl extends UsersDefault implements UsersInterface {
 
     private Locale localeBr = Locale.forLanguageTag("pt-BR");
-    static List<CreateUsers> users = new ArrayList<>();
+    static List<CreateUsersImpl> users = new ArrayList<>();
 
 
-    private CreateUsers(long userId, long enrollmentNumber, String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
+    private CreateUsersImpl(long userId, long enrollmentNumber, String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
         super(userId, enrollmentNumber, userName, userCpf, jobe_Tittle, userLogin, userPassword);
     }
+
+    public CreateUsersImpl() {}
 
     @Override
     public void createUser(String userName, String userCpf, String jobe_Tittle, String userLogin, String userPassword) {
@@ -25,7 +28,7 @@ public class CreateUsers extends UsersDefault {
         if (isPassCpfFormat) {
             if (isLoginFormat) {
                 if (isPassWordFormat) {
-                    CreateUsers createUsers = new CreateUsers(staticUserId++, staticEnrolllmentNumber++, userName, userCpf, jobe_Tittle, userLogin, userPassword);
+                    CreateUsersImpl createUsers = new CreateUsersImpl(staticUserId++, staticEnrolllmentNumber++, userName, userCpf, jobe_Tittle, userLogin, userPassword);
                     users.add(createUsers);
                 } else {
                     IO.println(String.format(localeBr, "Formato de senha: %s -> Inválido", userPassword));
@@ -147,10 +150,23 @@ public class CreateUsers extends UsersDefault {
     }
 
     @Override
-    public void userPrint() {
+    public void usersPrint(String userLogin, String userPassword) {
+      boolean isUser = users
+                .stream()
+                .anyMatch(u -> u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword));
+      if (isUser) {
+          IO.println("Login e senha de usuário encontrado!");
+          userPrint(userLogin, userPassword);
+      } else {
+          IO.println("Login e senha de usuário -> Inválidos ou não encontrados.");
+      }
+    }
+
+    private void userPrint(String userLogin, String userPassword) {
         if (!users.isEmpty()) {
             users
                     .stream()
+                    .filter(u -> u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword))
                     .forEach(u -> IO.println(u));
         } else {
             IO.println("Logins não cadastrados. Cadastre!");
@@ -161,16 +177,29 @@ public class CreateUsers extends UsersDefault {
     @Override
     public boolean login(String useLogin, String userPassword) {
 
-       boolean isLogin = users
+        boolean isLogin = users
                 .stream()
                 .anyMatch(u -> u.getUserLogin().equalsIgnoreCase(useLogin) && u.getUserPassword().equalsIgnoreCase(userPassword));
 
-       if (isLogin) {
-           IO.println("Login e senha aceitos, acesso concedido.");
-       } else {
-           IO.println("Login e senha, inválidos -> Acesso negado");
-       }
+        if (!users.isEmpty()) {
+            if (isLogin) {
+                IO.println("Login e senha aceitos, acesso concedido.");
+            } else {
+                IO.println("Login e senha, inválidos -> Acesso negado");
+            }
+
+        } else {
+            IO.println("Não existem usuários cadastrados, cadastre!");
+        }
 
         return isLogin;
+    }
+
+    static void main(String[] args) {
+        CreateUsersImpl createUsers = new CreateUsersImpl();
+        createUsers.createUser("Joana", "20.153.567-70", "Op. de Caixa Registradora", "J3oanalo", "123456");
+        createUsers.usersPrint("J3oanalo", "123456");
+        createUsers.userchangeName("20.153.567-70", "Josiane", "J3onalo", "123456");
+        createUsers.usersPrint("J3onalo", "123456");
     }
 }

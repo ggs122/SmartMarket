@@ -25,6 +25,8 @@ public abstract class UsersDefault {
         this.userPassword = userPassword;
     }
 
+    protected UsersDefault() {}
+
     protected long getUserId() {
         return userId;
     }
@@ -78,7 +80,9 @@ public abstract class UsersDefault {
     public abstract void userChangeCpf(String userName, String userNewCpf, String userLogin, String userPassword);
     public abstract void userChangeGetJobe_Tittle(String userCpf, String userLogin, String userPassword, String userNewGetJobe_Tittle);
     public abstract void userChangeLoginAndPasswor(String userCpf, String userOldLogin, String userOldPassword, String userNewLogin, String userNewPassword);
-    public abstract void userPrint();
+
+    public abstract void usersPrint(String userLogin, String userPassword);
+
     public abstract boolean login(String useLogin, String userPassword);
 
     @Override
