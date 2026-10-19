@@ -73,20 +73,20 @@ public class CreateUsersImpl extends UsersDefault implements UsersInterface {
         boolean isFormatCpf = UserUtills.checkingCpf(userNewCpf);
         boolean isLogin = users
                 .stream()
-                .anyMatch(u -> u.getUserName().equalsIgnoreCase(userName) && userLogin.equalsIgnoreCase(userLogin) && userPassword.equalsIgnoreCase(userPassword));
+                .anyMatch(u -> u.getUserName().equals(userName) && u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword));
 
         if (isLogin) {
             if (isFormatCpf) {
                 users
                         .stream()
-                        .filter(u -> u.getUserName().equalsIgnoreCase(userName) && userLogin.equalsIgnoreCase(userLogin) && userPassword.equalsIgnoreCase(userPassword))
+                        .filter(u -> u.getUserName().equalsIgnoreCase(userName) && u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword))
                         .forEach(u -> u.setUserCpf(userNewCpf));
                 users
                         .stream()
-                        .filter(u -> u.getUserName().equalsIgnoreCase(userName) && userLogin.equalsIgnoreCase(userLogin) && userPassword.equalsIgnoreCase(userPassword))
+                        .filter(u -> u.getUserName().equalsIgnoreCase(userName) && u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword))
                         .forEach(u -> IO.println(String.format(localeBr, "CPF de usuário alterado para -> %s", u.getUserCpf())));
             } else {
-                IO.println(String.format(localeBr, "Formato de CPF: %s -> Inválido!", userNewCpf));
+                IO.println(String.format(localeBr, "Não é possível alterar o número do CPF, pois o número informado: %s, contêm um formato inválido.", userNewCpf));
             }
 
         } else {
@@ -96,22 +96,26 @@ public class CreateUsersImpl extends UsersDefault implements UsersInterface {
 
     @Override
     public void userChangeGetJobe_Tittle(String userCpf, String userLogin, String userPassword, String userNewGetJobe_Tittle) {
-        boolean isFormatCpf = UserUtills.checkingCpf(userCpf);
+      boolean isFormatCpf = UserUtills
+                .checkingCpf(userCpf);
+
         boolean isLogin = users
                 .stream()
-                .anyMatch(u -> u.getUserCpf().equalsIgnoreCase(userCpf) && userLogin.equalsIgnoreCase(userLogin) && userPassword.equalsIgnoreCase(userPassword));
+                .anyMatch(u -> u.getUserCpf().equals(userCpf) && u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword));
 
         if (isLogin) {
+
             if (isFormatCpf) {
+
                 users
                         .stream()
-                        .filter(u -> u.getUserCpf().equalsIgnoreCase(userCpf) && userLogin.equalsIgnoreCase(userLogin) && userPassword.equalsIgnoreCase(userPassword))
-                        .forEach(u ->  {
+                        .filter(u -> u.getUserCpf().equals(userCpf) && u.getUserLogin().equals(userLogin) && u.getUserPassword().equals(userPassword))
+                        .forEach(u -> {
                             u.setJobe_Tittle(userNewGetJobe_Tittle);
                             IO.println(String.format(localeBr, "Cargo do funcionário(a) alterado para -> %s", u.getJobe_Tittle()));
                         });
             } else {
-                IO.println(String.format(localeBr, "Formato de CPF: %s -> Inválido!", userCpf));
+                IO.println(String.format(localeBr, "Impossivel alterar o cargo com o n° do formato do CPF digitado."));
             }
         } else {
             IO.println("Login Falhou!");
@@ -178,12 +182,12 @@ public class CreateUsersImpl extends UsersDefault implements UsersInterface {
 
     }
 
-    @Override
-    public boolean login(String useLogin, String userPassword) {
+
+    public static boolean login(String useLogin, String userPassword) {
 
         boolean isLogin = users
                 .stream()
-                .anyMatch(u -> u.getUserLogin().equalsIgnoreCase(useLogin) && u.getUserPassword().equalsIgnoreCase(userPassword));
+                .anyMatch(u -> u.getUserLogin().equals(useLogin) && u.getUserPassword().equals(userPassword));
 
         if (!users.isEmpty()) {
             if (isLogin) {
@@ -199,16 +203,18 @@ public class CreateUsersImpl extends UsersDefault implements UsersInterface {
         return isLogin;
     }
 
-    static void main(String[] args) {
-        CreateUsersImpl createUsers = new CreateUsersImpl();
-//        CreateUsersImpl createUsers = ServiceLoader.load(CreateUsersImpl.class).findFirst().orElseThrow();
-        createUsers.createUser("Joana", "20.153.567-70", "Op. de Caixa Registradora", "J3oanalo", "123456");
-        createUsers.usersPrint("J3oanalo", "123456");
-        createUsers.userchangeName("20.153.567-70", "Josiane", "J3oanalo", "123456");
-        createUsers.usersPrint("J3oanalo", "123456");
-        createUsers.userChangeCpf("Josiane", "30.153.567-70", "J3oanalo", "123456");
-        createUsers.usersPrint("J3oanalo", "123456");
-        createUsers.userChangeGetJobe_Tittle("30.153.567-70", "J3oanalo", "123456", "Gerente");
-        createUsers.usersPrint("J3oanalo", "123456");
-    }
+//    static void main(String[] args) {
+////        CreateUsersImpl createUsers = new CreateUsersImpl();
+////        createUsers.createUser("Joana", "20.153.567-70", "Op. de Caixa Registradora", "J3oanalo", "123456");
+////        createUsers.usersPrint("J3oanalo", "123456");
+////        createUsers.userchangeName("20.153.567-70", "Josiane", "J3oanalo", "123456");
+////        createUsers.usersPrint("J3oanalo", "123456");
+////        createUsers.userChangeCpf("Josiane", "30.153.567-70", "J3oanalo", "123456");
+////        createUsers.usersPrint("J3oanalo", "123456");
+////        createUsers.userChangeGetJobe_Tittle("30.153.567-70", "J3oanalo", "123456", "Gerente");
+////        createUsers.usersPrint("J3oanalo", "123456");
+////        createUsers.userChangeLoginAndPasswor("30.153.567-70", "J3oanalo", "123456", "J3osiane", "654321");
+////        createUsers.usersPrint("J3osiane", "654321");
+////        createUsers.login("J3osiane", "654321");
+//    }
 }

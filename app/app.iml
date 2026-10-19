@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="module" module-name="usersinterface" />
     <orderEntry type="module" module-name="createcustomerinterface" />
     <orderEntry type="module" module-name="customer" />
     <orderEntry type="module" module-name="stockofproducts" />

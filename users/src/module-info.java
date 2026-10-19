@@ -6,4 +6,6 @@ module users {
     requires usersinterface;
 
     provides UsersInterface with CreateUsersImpl;
+
+    exports br.com.users;
 }

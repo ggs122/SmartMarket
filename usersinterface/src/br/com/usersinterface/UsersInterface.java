@@ -7,5 +7,6 @@ public interface UsersInterface {
     void userChangeCpf(String userName, String userNewCpf, String userLogin, String userPassword);
     void userChangeGetJobe_Tittle(String userCpf, String userLogin, String userPassword, String userNewGetJobe_Tittle);
     void userChangeLoginAndPasswor(String userCpf, String userOldLogin, String userOldPassword, String userNewLogin, String userNewPassword);
+    void usersPrint(String userLogin, String userPassword);
 
 }

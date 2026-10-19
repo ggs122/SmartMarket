@@ -3,6 +3,7 @@ package br.com.app;
 import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.stockofproducts.CreateProductsUtills;
+import br.com.usersinterface.UsersInterface;
 
 import java.util.ServiceLoader;
 
@@ -10,7 +11,19 @@ public class Launch {
 
     static void main(String[] args) {
 
+       UsersInterface createUsers = ServiceLoader.load(UsersInterface.class).findFirst().orElseThrow();
 
+       createUsers.createUser("Joana", "20.153.567-70", "Op. de Caixa Registradora", "J3oanalo", "123456");
+       createUsers.usersPrint("J3oanalo", "123456");
+       createUsers.userchangeName("20.153.567-70", "Josiane", "J3oanalo", "123456");
+       createUsers.usersPrint("J3oanalo", "123456");
+       createUsers.userChangeCpf("Josiane", "30.153.567-70", "J3oanalo", "123456");
+       createUsers.usersPrint("J3oanalo", "123456");
+       createUsers.userChangeGetJobe_Tittle("30.153.567-70", "J3oanalo", "123456", "Gerente");
+       createUsers.usersPrint("J3oanalo", "123456");
+       createUsers.userChangeLoginAndPasswor("30.153.567-70", "J3oanalo", "123456", "J3osiane", "654321");
+       createUsers.usersPrint("J3osiane", "654321");
+//       createUsers.login("J3osiane", "654321");
 
        var createProducts1 = ServiceLoader.load(CreateProductsInterface.class).findFirst().orElse(null);
        createProducts1.setUpCompanyDataAtTheSystemLevel("057", "053256");
@@ -19,11 +32,13 @@ public class Launch {
        createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", "MASSAS", 7.50, 110);
        createProducts1.createProduct("000261", "Massa de Macarrão - Talharim - 500kg", "MASSAS", 7.50, 110);
        createProducts1.printProduct();
-       createProducts1.changeProductName("000261", "Macarrão Talharim - 500g");
+       createProducts1.changeProductName("000261", "Macarrão Talharim - 500g", "J3osiane", "654321");
        createProducts1.printProduct();
-       createProducts1.changeProductPrice("000261", 8.50);
+       createProducts1.changeProductPrice("000261", 8.51, "J3osiane", "654321");
        createProducts1.printProduct();
-       createProducts1.deleteProduct("000261");
+
+       //TODO parei aqui!
+       createProducts1.deleteProduct("000261", "J3osiane", "654321");
        createProducts1.printProduct();
        createProducts1.printProduct();
        createProducts1.printProduct();

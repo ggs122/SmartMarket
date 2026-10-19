@@ -83,8 +83,6 @@ public abstract class UsersDefault {
 
     public abstract void usersPrint(String userLogin, String userPassword);
 
-    public abstract boolean login(String useLogin, String userPassword);
-
     @Override
     public String toString() {
         return String.format(localeBr, "ID: %s | Nome: %s | Matrícula %s | CPF: %s | Cargo: %s | Login: %s | Senha: %s", userId, userName, enrollmentNumber, userCpf, jobe_Tittle, userLogin, userPassword);

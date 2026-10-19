@@ -7,6 +7,8 @@ module stockofproducts {
 
     requires createproductsInterface;
 
+    requires users;
+
     provides CreateProductsInterface with CreateProductsImpl;
 
 }

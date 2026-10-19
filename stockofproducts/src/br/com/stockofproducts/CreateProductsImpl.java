@@ -2,6 +2,8 @@ package br.com.stockofproducts;
 
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.stockofproducts.stockdefault.StockDefault;
+import br.com.users.CreateUsersImpl;
+import br.com.users.UserUtills;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -137,19 +139,28 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void changeProductName(String code, String newProductName) {
+    public void changeProductName(String code, String newProductName, String userLogin, String userPassword) {
+
+        boolean isLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
        boolean isProduct = createdProductsList
                 .stream()
                 .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
 
        if (isProduct) {
-           createdProductsList
-                   .stream()
-                   .filter(p -> p.getCode().equalsIgnoreCase( code))
-                   .forEach(p -> p.setName(newProductName));
-           IO.println("-----------------------------------------------------------------------------------------------");
-           IO.println(String.format(localeBr, "Produto Cód.: %s -> Nome alterado para: %s", code, newProductName));
-           IO.println("-----------------------------------------------------------------------------------------------");
+
+           if (isLogin) {
+               createdProductsList
+                       .stream()
+                       .filter(p -> p.getCode().equals( code))
+                       .forEach(p -> p.setName(newProductName));
+               IO.println("-----------------------------------------------------------------------------------------------");
+               IO.println(String.format(localeBr, "Produto Cód.: %s -> Nome alterado para: %s", code, newProductName));
+               IO.println("-----------------------------------------------------------------------------------------------");
+           } else {
+               IO.println(String.format(localeBr, "Login: %s e senha: %s -> Inválidos", userLogin, userPassword));
+           }
        } else {
            IO.println("-----------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
@@ -159,19 +170,28 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void changeProductPrice(String code, double newProductPrice) {
+    public void changeProductPrice(String code, double newProductPrice, String userLogin, String userPassWord) {
+
+       boolean isLogin = CreateUsersImpl
+                .login(userLogin, userPassWord);
+
       boolean isProduct = createdProductsList
                 .stream()
                 .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
 
       if (isProduct) {
-          createdProductsList
-                  .stream()
-                  .filter(p -> p.getCode().equalsIgnoreCase(code))
-                  .forEach(p -> p.setPrice(newProductPrice));
-          IO.println("-----------------------------------------------------------------------------------------------");
-          IO.println(String.format(localeBr, "Produto Cód.: %s -> Preço alterado para: %s", code, priceFormated.format(newProductPrice)));
-          IO.println("-----------------------------------------------------------------------------------------------");
+
+          if (isLogin) {
+              createdProductsList
+                      .stream()
+                      .filter(p -> p.getCode().equalsIgnoreCase(code))
+                      .forEach(p -> p.setPrice(newProductPrice));
+              IO.println("-----------------------------------------------------------------------------------------------");
+              IO.println(String.format(localeBr, "Produto Cód.: %s -> Preço alterado para: %s", code, priceFormated.format(newProductPrice)));
+              IO.println("-----------------------------------------------------------------------------------------------");
+          } else {
+              IO.println(String.format(localeBr, "Login: %s e senha: %s -> Inválidos", userLogin, userPassWord));
+          }
       } else {
           IO.println("-----------------------------------------------------------------------------------------------");
           IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
@@ -203,14 +223,23 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void deleteProduct(String code) {
+    public void deleteProduct(String code, String userLogin, String userPassWord) {
+
+        boolean isLogin = CreateUsersImpl
+                .login(userLogin, userPassWord);
+
      boolean isSimilarProduct = createdProductsList
               .removeIf(p -> p.getCode().equalsIgnoreCase(code));
 
      if (isSimilarProduct) {
-         IO.println("-----------------------------------------------------------------------------------------------");
-         IO.println(String.format(localeBr, "Produto Cód.: %s -> Removido do estoque com sucesso!", code));
-         IO.println("-----------------------------------------------------------------------------------------------");
+
+         if (isLogin) {
+             IO.println("-----------------------------------------------------------------------------------------------");
+             IO.println(String.format(localeBr, "Produto Cód.: %s -> Removido do estoque com sucesso!", code));
+             IO.println("-----------------------------------------------------------------------------------------------");
+         } else {
+             IO.println(String.format(localeBr, "Login: %s e senha: %s -> Inválidos", userLogin, userPassWord));
+         }
      } else {
          IO.println("-----------------------------------------------------------------------------------------------");
          IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
