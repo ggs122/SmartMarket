@@ -37,7 +37,6 @@ public class Launch {
        createProducts1.changeProductPrice("000261", 8.51, "J3osiane", "654321");
        createProducts1.printProduct();
 
-       //TODO parei aqui!
        createProducts1.deleteProduct("000261", "J3osiane", "654321");
        createProducts1.printProduct();
        createProducts1.printProduct();
@@ -50,6 +49,7 @@ public class Launch {
        createProducts1.addAditionalProductsAtTheSystemLevel("000261", 50, "J3osiane", "654321");
        createProducts1.printProduct();
 
+       //TODO parei aqui!
        var createCustomer1 = ServiceLoader.load(CreateCustomerInterface.class).findFirst().orElse(null);
        createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");
        createCustomer1.createCustomer("30.159.598-5", "105.265.897-50", "Marcelo Souza Soares", "(21)965987845");

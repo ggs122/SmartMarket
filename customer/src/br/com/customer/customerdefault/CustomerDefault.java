@@ -56,8 +56,8 @@ public abstract class CustomerDefault {
     }
 
     public abstract void createCustomer(String cutomerID, String customercpf, String customerName, String customerPhone);
-    public abstract void deleteCustomer(String customerID);
-    public abstract void changeID(String customerCpf, String newID);
+    public abstract void deleteCustomer(String customerID, String userLogin, String userPassword);
+    public abstract void changeID(String customerCpf, String newCustomerID, String userLogin, String userPassword);
     public abstract void changeCpf(String customerID, String newCustomerCpf);
     public abstract void changeName(String ID, String newName);
     public abstract void changePhone(String ID, String newCustomerPhone);

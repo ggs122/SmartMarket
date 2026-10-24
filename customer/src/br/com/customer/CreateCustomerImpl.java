@@ -2,6 +2,7 @@ package br.com.customer;
 
 import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.customer.customerdefault.CustomerDefault;
+import br.com.users.CreateUsersImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,17 +90,26 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
         return finalResult;
     }
 
+    //FIXME -> Verificar a lógica depois.
     @Override
-    public void deleteCustomer(String customerID) {
+    public void deleteCustomer(String customerID, String userLogin, String userPassword) {
+      boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
        boolean isSameCustomer = creatCustomerImplList
                 .stream()
                 .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
 
        if (isSameCustomer) {
-           creatCustomerImplList.removeIf(c -> c.getCustomerID().equalsIgnoreCase(customerID));
-           IO.println("--------------------------------------------------------------------------------------------------------");
-           IO.println(String.format(localeBr, "Cliente, identidade N° %s -> deletado com sucesso do sistema.", customerID));
-           IO.println("--------------------------------------------------------------------------------------------------------");
+
+           if (isSimilarLogin) {
+               creatCustomerImplList.removeIf(c -> c.getCustomerID().equalsIgnoreCase(customerID));
+               IO.println("--------------------------------------------------------------------------------------------------------");
+               IO.println(String.format(localeBr, "Cliente, identidade N° %s -> deletado com sucesso do sistema.", customerID));
+               IO.println("--------------------------------------------------------------------------------------------------------");
+           } else {
+               IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Inválidos", userLogin,  userPassword));
+           }
        } else {
            IO.println("--------------------------------------------------------------------------------------------------------");
            IO.println(String.format(localeBr, "Identidade: %s -> Inexistente!", customerID));
@@ -109,8 +119,13 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     }
 
 
+    //FIXME -> Verificar a lógica depois.
     @Override
-    public void changeID(String customerCpf, String newCustomerID) {
+    public void changeID(String customerCpf, String newCustomerID, String userLogin, String userPassword) {
+
+        boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
         boolean isIDFormat = CustomerUtills.checkingCustomerID(newCustomerID);
         boolean isSameCustomer = creatCustomerImplList
                 .stream()
