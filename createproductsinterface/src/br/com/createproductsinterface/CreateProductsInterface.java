@@ -9,9 +9,9 @@ public interface CreateProductsInterface {
     void findProduct(String code);
     void changeProductName(String code, String newProductName, String userLogin, String userPassWord);
     void changeProductPrice(String code, double newProductPrice, String userLogin, String userPassWord);
-    void changeProductAmount(String code, long amount);
+    void changeProductAmount(String code, long amount, String userLogin, String userPassword);
     void deleteProduct(String code, String userLogin, String userPassWord);
-    void addAditionalProductsAtTheSystemLevel(String code, long amount);
+    void addAditionalProductsAtTheSystemLevel(String code, long amount, String userLogin, String userPassword);
     void printProduct();
 
 }

@@ -42,12 +42,12 @@ public class Launch {
        createProducts1.printProduct();
        createProducts1.printProduct();
        createProducts1.printProduct();
-       createProducts1.changeProductAmount("002659", 60);
+       createProducts1.changeProductAmount("002659", 60, "J3osiane", "654321");
        createProducts1.printProduct();
-       createProducts1.addAditionalProductsAtTheSystemLevel("000260", 50);
+       createProducts1.addAditionalProductsAtTheSystemLevel("000260", 50, "J3osiane", "654321");
        createProducts1.printProduct();
-       createProducts1.addAditionalProductsAtTheSystemLevel("000260", 50);
-       createProducts1.addAditionalProductsAtTheSystemLevel("000261", 50);
+       createProducts1.addAditionalProductsAtTheSystemLevel("000260", 50, "J3osiane", "654321");
+       createProducts1.addAditionalProductsAtTheSystemLevel("000261", 50, "J3osiane", "654321");
        createProducts1.printProduct();
 
        var createCustomer1 = ServiceLoader.load(CreateCustomerInterface.class).findFirst().orElse(null);

@@ -200,20 +200,28 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void changeProductAmount(String code, long amount) {
+    public void changeProductAmount(String code, long amount, String userLogin, String userPassword) {
+
+      boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
       boolean isSameProduct = createdProductsList
                 .stream()
                 .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
       if (isSameProduct) {
-          createdProductsList
-                  .stream()
-                  .filter(p -> p.getCode().equalsIgnoreCase(code))
-                  .forEach(p -> {
-                      p.setAmount(amount);
-                      IO.println("-----------------------------------------------------------------------------------------------");
-                      IO.println(String.format(localeBr, "Produto Cód.: %s -> Quantidade alterada para: %d, com sucesso!", code, amount));
-                      IO.println("-----------------------------------------------------------------------------------------------");
-                  });
+          if (isSimilarLogin) {
+              createdProductsList
+                      .stream()
+                      .filter(p -> p.getCode().equalsIgnoreCase(code))
+                      .forEach(p -> {
+                          p.setAmount(amount);
+                          IO.println("-----------------------------------------------------------------------------------------------");
+                          IO.println(String.format(localeBr, "Produto Cód.: %s -> Quantidade alterada para: %d, com sucesso!", code, amount));
+                          IO.println("-----------------------------------------------------------------------------------------------");
+                      });
+          } else {
+              IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Inválido", userLogin, userPassword));
+          }
       } else {
           IO.println("-----------------------------------------------------------------------------------------------");
           IO.println(String.format(localeBr, "Produto Cód: %s -> Não encontrado!!", code));
@@ -248,22 +256,29 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void addAditionalProductsAtTheSystemLevel(String code, long amount) {
+    public void addAditionalProductsAtTheSystemLevel(String code, long amount, String userLogin, String userPassword) {
+       boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin,  userPassword);
+
       boolean isSameProduct = createdProductsList
                 .stream()
                 .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
       if (isSameProduct) {
-          createdProductsList
-                  .stream()
-                  .filter(p -> p.getCode().equalsIgnoreCase(code))
-                  .forEach(p -> {
-                      long newAmount = p.getAmount() + amount;
-                      p.setAmount(newAmount);
-                      IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
-                      IO.println(String.format(localeBr, "Produto: [%s], Código: [%s] -> Adicionado a quantidade de [%d], produto(s) com sucesso!", p.getName(), p.getCode(), amount));
-                      IO.println(String.format(localeBr, "Nova quantidade em estoque: [%d] produto(s).", p.getAmount()));
-                      IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
-                  });
+          if (isSimilarLogin) {
+              createdProductsList
+                      .stream()
+                      .filter(p -> p.getCode().equalsIgnoreCase(code))
+                      .forEach(p -> {
+                          long newAmount = p.getAmount() + amount;
+                          p.setAmount(newAmount);
+                          IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                          IO.println(String.format(localeBr, "Produto: [%s], Código: [%s] -> Adicionado a quantidade de [%d], produto(s) com sucesso!", p.getName(), p.getCode(), amount));
+                          IO.println(String.format(localeBr, "Nova quantidade em estoque: [%d] produto(s).", p.getAmount()));
+                          IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                      });
+          } else {
+              IO.println(String.format(localeBr, "", userLogin, userPassword));
+          }
       } else {
           IO.println("--------------------------------------------------------------------------------------------------------------------------------------");
           IO.println(String.format(localeBr, "Código de produto: %s -> inexistente, impossível adicionar a quantidade de [%d] produto(s).", code, amount));
