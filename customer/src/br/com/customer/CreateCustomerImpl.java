@@ -90,7 +90,6 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
         return finalResult;
     }
 
-    //FIXME -> Verificar a lógica depois.
     @Override
     public void deleteCustomer(String customerID, String userLogin, String userPassword) {
       boolean isSimilarLogin = CreateUsersImpl
@@ -119,7 +118,7 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     }
 
 
-    //FIXME -> Verificar a lógica depois.
+
     @Override
     public void changeID(String customerCpf, String newCustomerID, String userLogin, String userPassword) {
 
@@ -133,17 +132,21 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
 
      if (isSameCustomer) {
          if (isIDFormat) {
-             creatCustomerImplList
-                     .stream()
-                     .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
-                     .forEach(c -> c.setCustomerID(newCustomerID));
-             IO.println("-------------------------------------------------------------------------------");
-             IO.println("Alteração realizada com sucesso!");
-             creatCustomerImplList
-                     .stream()
-                             .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
-                                     .forEach(c -> IO.println(String.format(localeBr, "Nova identidade N° %s", c.getCustomerID())));
-             IO.println("-------------------------------------------------------------------------------");
+             if (isSimilarLogin) {
+                 creatCustomerImplList
+                         .stream()
+                         .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
+                         .forEach(c -> c.setCustomerID(newCustomerID));
+                 IO.println("-------------------------------------------------------------------------------");
+                 IO.println("Alteração realizada com sucesso!");
+                 creatCustomerImplList
+                         .stream()
+                         .filter(c -> c.getCustomerCpf().equalsIgnoreCase(customerCpf))
+                         .forEach(c -> IO.println(String.format(localeBr, "Nova identidade N° %s", c.getCustomerID())));
+                 IO.println("-------------------------------------------------------------------------------");
+             } else {
+              IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", userLogin, userPassword));
+             }
          } else {
              IO.println("-------------------------------------------------------------------------------");
              IO.println("Digite um formato válido!");
@@ -158,7 +161,10 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     }
 
     @Override
-    public void changeCpf(String customerID, String newCustomerCpf) {
+    public void changeCpf(String customerID, String newCustomerCpf, String userLogin, String userPassword) {
+        boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
        boolean isSimilarCustomerID = creatCustomerImplList
                 .stream()
                 .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
@@ -166,17 +172,23 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
        if (isSimilarCustomerID) {
          boolean isFormatCpf = CustomerUtills.checkingCustomerCpf(newCustomerCpf);
            if (isFormatCpf) {
-               creatCustomerImplList
-                       .stream()
-                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
-                       .forEach(c -> c.setCustomerCpf(newCustomerCpf));
-               IO.println("---------------------------------------------------------------------");
-               IO.println("Alteração realizada com sucesso!");
-               creatCustomerImplList
-                       .stream()
-                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
-                       .forEach(c -> IO.println(String.format(localeBr, "Novo CPF N° -> %s", c.getCustomerCpf())));
-               IO.println("---------------------------------------------------------------------");
+
+               if (isSimilarLogin) {
+                   creatCustomerImplList
+                           .stream()
+                           .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                           .forEach(c -> c.setCustomerCpf(newCustomerCpf));
+                   IO.println("---------------------------------------------------------------------");
+                   IO.println("Alteração realizada com sucesso!");
+                   creatCustomerImplList
+                           .stream()
+                           .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                           .forEach(c -> IO.println(String.format(localeBr, "Novo CPF N° -> %s", c.getCustomerCpf())));
+                   IO.println("---------------------------------------------------------------------");
+               } else {
+                   IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", userLogin, userPassword));
+               }
+
            } else {
                IO.println("-------------------------------");
                IO.println("Digite um número de CPF válido.");
@@ -190,26 +202,34 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     }
 
     @Override
-    public void changeName(String customerID, String newName) {
+    public void changeName(String customerID, String newName, String userLogin, String userPassword) {
+        boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
       boolean isSimilarCustomerID = creatCustomerImplList
                 .stream()
                 .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
 
       if (isSimilarCustomerID) {
-          creatCustomerImplList
-                  .stream()
-                  .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
-                  .forEach(c -> {
-                      IO.println("------------------------------------------------------------------------");
-                      IO.println("Alteração realizada com sucesso!");
+          if (isSimilarLogin) {
+              creatCustomerImplList
+                      .stream()
+                      .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                      .forEach(c -> {
+                          IO.println("------------------------------------------------------------------------");
+                          IO.println("Alteração realizada com sucesso!");
                           c.setCustomerName(newName);
 
                           creatCustomerImplList
                                   .stream()
                                   .filter(cr -> cr.getCustomerID().equalsIgnoreCase(customerID))
                                   .forEach(cr -> IO.println(String.format(localeBr, "Novo Nome -> %s", cr.getCustomerName())));
-                      IO.println("------------------------------------------------------------------------");
-                  });
+                          IO.println("------------------------------------------------------------------------");
+                      });
+          } else {
+              IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", userLogin, userPassword));
+          }
+
       } else {
           IO.println("------------------------------------------------------------------------");
           IO.println(String.format(localeBr,"Identidade N° %s -> Inválido ou inexistente", customerID));
@@ -218,7 +238,11 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
     }
 
     @Override
-    public void changePhone(String customerID, String newCustomerPhone) {
+    public void changePhone(String customerID, String newCustomerPhone, String userLogin, String userPassword) {
+
+        boolean isSimilarLogin = CreateUsersImpl
+                .login(userLogin, userPassword);
+
        boolean isSameID = creatCustomerImplList
                 .stream()
                 .anyMatch(c -> c.getCustomerID().equalsIgnoreCase(customerID));
@@ -226,15 +250,19 @@ public class CreateCustomerImpl extends CustomerDefault implements CreateCustome
        if (isSameID) {
            boolean isPhoneFormat = CustomerUtills.checkingCustomerPhone(newCustomerPhone);
            if (isPhoneFormat) {
-               creatCustomerImplList
-                       .stream()
-                       .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
-                       .forEach(c -> {
-                           c.setCustomerPhone(newCustomerPhone);
-                           IO.println("------------------------------------------------------------------------------------------------");
-                           IO.println(String.format(localeBr, "Telefone N° alterado com sucesso para -> %s", c.getCustomerPhone()));
-                           IO.println("------------------------------------------------------------------------------------------------");
-                       });
+               if (isSimilarLogin) {
+                   creatCustomerImplList
+                           .stream()
+                           .filter(c -> c.getCustomerID().equalsIgnoreCase(customerID))
+                           .forEach(c -> {
+                               c.setCustomerPhone(newCustomerPhone);
+                               IO.println("------------------------------------------------------------------------------------------------");
+                               IO.println(String.format(localeBr, "Telefone N° alterado com sucesso para -> %s", c.getCustomerPhone()));
+                               IO.println("------------------------------------------------------------------------------------------------");
+                           });
+               } else {
+                   IO.println(String.format(localeBr, "Usuário: %s e senha: %s -> Não conferem.", userLogin, userPassword));
+               }
            } else {
                IO.println("------------------------------------------------------------------------------------------------");
                IO.println("Digite um formato de telefone válido!");

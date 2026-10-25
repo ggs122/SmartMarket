@@ -58,9 +58,9 @@ public abstract class CustomerDefault {
     public abstract void createCustomer(String cutomerID, String customercpf, String customerName, String customerPhone);
     public abstract void deleteCustomer(String customerID, String userLogin, String userPassword);
     public abstract void changeID(String customerCpf, String newCustomerID, String userLogin, String userPassword);
-    public abstract void changeCpf(String customerID, String newCustomerCpf);
-    public abstract void changeName(String ID, String newName);
-    public abstract void changePhone(String ID, String newCustomerPhone);
+    public abstract void changeCpf(String customerID, String newCustomerCpf, String userLogin, String userPassword);
+    public abstract void changeName(String customerID, String newName, String userLogin, String userPassword);
+    public abstract void changePhone(String customerID, String newCustomerPhone, String userLogin, String userPassword);
     public abstract void print();
 
     @Override
