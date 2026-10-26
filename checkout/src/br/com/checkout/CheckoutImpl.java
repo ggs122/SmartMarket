@@ -26,7 +26,7 @@ public class CheckoutImpl extends CheckoutDefault {
     }
 
     @Override
-    protected void resetAfterRegister() {
+    protected void resetAfterRegisterTheTotal() {
 
     }
 }

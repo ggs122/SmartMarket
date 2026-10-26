@@ -40,6 +40,6 @@ public abstract class CheckoutDefault {
     protected abstract void registerProducts(String code);
     protected abstract void deletOneProductOfTheRegister(String code, String userLogin, String userPassword);
     protected abstract void total();
-    protected abstract void resetAfterRegister();
+    protected abstract void resetAfterRegisterTheTotal();
 
 }
