@@ -120,21 +120,38 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
     @Override
-    public void findProduct(String code) {
+    public double findProduct(String code) {
+        double localProductValue = 0.0;
        boolean isSameProduct = createdProductsList
                 .stream()
-                .anyMatch(p -> p.getCode().equalsIgnoreCase(code));
+                .anyMatch(p -> p.getCode().equals(code));
+
+        boolean greaterThanZero = createdProductsList
+                .stream()
+                .anyMatch(p -> p.getCode().equals(code) && p.getAmount() > 0);
 
        if (isSameProduct) {
            IO.println("---------------------------------------------------------------------------------------------------------------------------------");
-           createdProductsList
-                   .stream()
-                   .filter(p -> p.getCode().equalsIgnoreCase(code))
-                   .forEach(p -> IO.println(p));
+           if (greaterThanZero) {
+               createdProductsList
+                       .stream()
+                       .filter(p -> p.getCode().equalsIgnoreCase(code))
+                       .forEach(p -> IO.println(p));
+
+               localProductValue = createdProductsList
+                       .stream()
+                       .mapToDouble(p -> p.getPrice())
+                       .sum();
+           } else {
+               localProductValue = 0.0;
+               IO.println(String.format(localeBr, "Produto código: %s -> quantidade em estoque insuficiente.", code));
+           }
            IO.println("---------------------------------------------------------------------------------------------------------------------------------");
        } else {
            IO.println(String.format(localeBr, "Código de produto %s: Inválido -> Produto não encontrado!", code));
        }
+
+       return localProductValue;
 
     }
 
@@ -288,6 +305,7 @@ public class CreateProductsImpl extends StockDefault implements CreateProductsIn
     }
 
 
+    @Override
     public void minusProduct(String code, long amount) {
        boolean isSameProduct = createdProductsList
                 .stream()

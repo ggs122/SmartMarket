@@ -35,11 +35,49 @@ public abstract class CheckoutDefault {
         this.productValue = productValue;
     }
 
+    protected long getItemNumber() {
+        return itemNumber;
+    }
 
+    protected void setItemNumber(long itemNumber) {
+        this.itemNumber = itemNumber;
+    }
+
+    protected String getProductName() {
+        return productName;
+    }
+
+    protected void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    protected String getProductDescription() {
+        return productDescription;
+    }
+
+    protected void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    protected double getProductValue() {
+        return productValue;
+    }
+
+    protected void setProductValue(double productValue) {
+        this.productValue = productValue;
+    }
+
+    protected double getTotal() {
+        return total;
+    }
+
+    protected void setTotal(double total) {
+        this.total = total;
+    }
 
     protected abstract void registerProducts(String code);
     protected abstract void deletOneProductOfTheRegister(String code, String userLogin, String userPassword);
-    protected abstract void total();
+    protected abstract void total(double productPrice);
     protected abstract void resetAfterRegisterTheTotal();
 
 }

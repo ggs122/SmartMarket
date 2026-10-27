@@ -5,6 +5,7 @@ import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.usersinterface.UsersInterface;
 
+//TODO parei aqui nesta classe.
 public class CheckoutImpl extends CheckoutDefault {
 
     private CreateCustomerInterface customer;
@@ -13,6 +14,11 @@ public class CheckoutImpl extends CheckoutDefault {
 
     @Override
     protected void registerProducts(String code) {
+
+        double localProductPrice = products.findProduct(code);
+        products.minusProduct(code, 1);
+        total(localProductPrice);
+
     }
 
     @Override
@@ -21,7 +27,11 @@ public class CheckoutImpl extends CheckoutDefault {
     }
 
     @Override
-    protected void total() {
+    protected void total(double productPrice) {
+
+        double totalLocal = getTotal() + productPrice;
+        setTotal(totalLocal);
+        System.out.println(getTotal());
 
     }
 

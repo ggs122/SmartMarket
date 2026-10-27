@@ -107,7 +107,7 @@ public abstract class StockDefault {
     }
 
     public abstract void createProduct(String code, String name, String categories, double price, long amount);
-    public abstract void findProduct(String code);
+    public abstract double findProduct(String code);
     public abstract void changeProductName(String code, String newProductName, String userLogin, String userPassWord);
     public abstract void changeProductPrice(String code, double newProductPrice, String userLogin, String userPassWord);
     public abstract void changeProductAmount(String code, long amount, String userLogin, String userPassword);
