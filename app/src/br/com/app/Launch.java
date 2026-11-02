@@ -65,8 +65,8 @@ public class Launch {
        createCustomer1.changePhone("22.951.895-6", "(21)971556598", "J3osiane", "654321");
        createCustomer1.print();
 
-      var checkout1 = ServiceLoader.load(CheckoutInterface.class).findFirst().orElseThrow();
-      checkout1.registerProducts("000261");
+//      CheckoutInterface checkout1 = ServiceLoader.load(CheckoutInterface.class).findFirst().orElseThrow();
+//      checkout1.registerProducts("000260");
     }
 
 }

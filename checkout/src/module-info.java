@@ -1,5 +1,4 @@
-import br.com.checkout.CheckoutImpl;
-import br.com.checkoutinterface.CheckoutInterface;
+
 
 module checkout {
 
@@ -8,6 +7,6 @@ module checkout {
     requires usersinterface;
     requires checkoutinterface;
 
-    provides CheckoutInterface with CheckoutImpl;
+    provides br.com.checkoutinterface.CheckoutInterface with br.com.checkout.CheckoutImpl;
 
 }

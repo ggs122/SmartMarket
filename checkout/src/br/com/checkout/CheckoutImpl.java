@@ -6,12 +6,14 @@ import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.usersinterface.UsersInterface;
 
+import java.util.ServiceLoader;
+
 //TODO parei aqui nesta classe.
 public class CheckoutImpl extends CheckoutDefault implements CheckoutInterface {
 
-    private CreateCustomerInterface customer;
-    private CreateProductsInterface products;
-    private UsersInterface users;
+    private CreateCustomerInterface customer = ServiceLoader.load(CreateCustomerInterface.class).findFirst().orElseThrow();
+    private CreateProductsInterface products = ServiceLoader.load(CreateProductsInterface.class).findFirst().orElseThrow();
+    private UsersInterface users = ServiceLoader.load(UsersInterface.class).findFirst().orElseThrow();
 
     @Override
     public void registerProducts(String code) {
