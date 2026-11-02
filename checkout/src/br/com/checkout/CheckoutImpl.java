@@ -1,19 +1,20 @@
 package br.com.checkout;
 
 import br.com.checkout.checkoutdefault.CheckoutDefault;
+import br.com.checkoutinterface.CheckoutInterface;
 import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.usersinterface.UsersInterface;
 
 //TODO parei aqui nesta classe.
-public class CheckoutImpl extends CheckoutDefault {
+public class CheckoutImpl extends CheckoutDefault implements CheckoutInterface {
 
     private CreateCustomerInterface customer;
     private CreateProductsInterface products;
     private UsersInterface users;
 
     @Override
-    protected void registerProducts(String code) {
+    public void registerProducts(String code) {
 
         double localProductPrice = products.findProduct(code);
         products.minusProduct(code, 1);
@@ -22,12 +23,12 @@ public class CheckoutImpl extends CheckoutDefault {
     }
 
     @Override
-    protected void deletOneProductOfTheRegister(String code, String userLogin, String userPassword) {
+    public void deletOneProductOfTheRegister(String code, String userLogin, String userPassword) {
 
     }
 
     @Override
-    protected void total(double productPrice) {
+    public void total(double productPrice) {
 
         double totalLocal = getTotal() + productPrice;
         setTotal(totalLocal);
@@ -36,7 +37,7 @@ public class CheckoutImpl extends CheckoutDefault {
     }
 
     @Override
-    protected void resetAfterRegisterTheTotal() {
+    public void resetAfterRegisterTheTotal() {
 
     }
 }

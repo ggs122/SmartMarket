@@ -1,5 +1,6 @@
 package br.com.app;
 
+import br.com.checkoutinterface.CheckoutInterface;
 import br.com.createcustomerinterface.CreateCustomerInterface;
 import br.com.createproductsinterface.CreateProductsInterface;
 import br.com.stockofproducts.CreateProductsUtills;
@@ -63,6 +64,9 @@ public class Launch {
        createCustomer1.print();
        createCustomer1.changePhone("22.951.895-6", "(21)971556598", "J3osiane", "654321");
        createCustomer1.print();
+
+      var checkout1 = ServiceLoader.load(CheckoutInterface.class).findFirst().orElseThrow();
+      checkout1.registerProducts("000261");
     }
 
 }
