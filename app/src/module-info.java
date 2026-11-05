@@ -1,8 +1,3 @@
-import br.com.checkoutinterface.CheckoutInterface;
-import br.com.createcustomerinterface.CreateCustomerInterface;
-import br.com.createproductsinterface.CreateProductsInterface;
-import br.com.usersinterface.UsersInterface;
-
 module app {
 
     requires createproductsInterface;
@@ -11,10 +6,10 @@ module app {
     requires usersinterface;
     requires checkoutinterface;
 
-    uses CreateProductsInterface;
-    uses CreateCustomerInterface;
-    uses UsersInterface;
-    uses CheckoutInterface;
+    uses br.com.createproductsinterface.CreateProductsInterface;
+    uses br.com.createcustomerinterface.CreateCustomerInterface;
+    uses br.com.usersinterface.UsersInterface;
+    uses br.com.checkoutinterface.CheckoutInterface;
 
 
 
